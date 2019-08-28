@@ -1,0 +1,43 @@
+
+# Start up SAMWeb, Nginx, SAM Station, and Apache
+#
+
+version: "3.7"
+services:
+
+    nginx:
+        image: bjwhitefnal/sam_nginx_server
+        ports:
+            - "8480:8480" #TODO
+        depends_on:
+            - samweb_server
+
+    #apache:
+    #    image: bjwhitefnal/sam_httpd_server 
+    #    ports:
+    #        - "8483" # TODO
+
+
+    samweb_server:
+        image: bjwhitefnal/samweb_server
+        environment:
+            - EXPERIMENT=sam_bjwhite
+        volumes:
+            - type: bind
+              source: ./samweb_server/sam-web 
+              target: /opt/sam/samweb_server/sam-web
+        secrets:
+            - samweb_db_secret
+
+    #sam_station:
+    #    image: bjwhitefnal/sam-station
+    #    environment:
+    #        - EXPERIMENT=sam_bjwhite
+    #    depends_on:
+    #        - nginx
+    #        #- apache
+    
+    
+secrets:
+    samweb_db_secret:
+        file: ./samweb_server/config/secret/postgres.secret
