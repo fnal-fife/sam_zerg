@@ -5,19 +5,19 @@
 version: "3.7"
 services:
 
-    nginx:
-        image: bjwhitefnal/sam_nginx_server
+    # Web server/reverse proxy/SSL termination
+    apache:
+        image: bjwhitefnal/sam_httpd_server 
         ports:
-            - "8480:8480" #TODO
+            - "127.0.0.1:8483:8483"
+            - "127.0.0.1:8480:8480"
         depends_on:
             - samweb_server
-
-    #apache:
-    #    image: bjwhitefnal/sam_httpd_server 
-    #    ports:
-    #        - "8483" # TODO
+        volumes:
+            - osg-ca-volume:/etc/grid-security/certificates
 
 
+    # SAM Web Server with DB password as a secret
     samweb_server:
         image: bjwhitefnal/samweb_server
         environment:
@@ -29,14 +29,16 @@ services:
         secrets:
             - samweb_db_secret
 
-    #sam_station:
-    #    image: bjwhitefnal/sam-station
-    #    environment:
-    #        - EXPERIMENT=sam_bjwhite
-    #    depends_on:
-    #        - nginx
-    #        #- apache
+
+    # Service to handle OSG CA Certificates by updating them and making them available via the named volume 'osg-ca-volume'
+    osg_authentication:
+        image: bjwhitefnal/osg_authentication
+        volumes:
+            - osg-ca-volume:/etc/grid-security/certificates
+            - /sys/fs/cgroup:/sys/fs/cgroup:ro
     
+volumes:
+    osg-ca-volume:
     
 secrets:
     samweb_db_secret:
