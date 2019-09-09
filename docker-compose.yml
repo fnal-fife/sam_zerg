@@ -36,6 +36,7 @@ services:
         volumes:
             - osg-ca-volume:/etc/grid-security/certificates
             - /sys/fs/cgroup:/sys/fs/cgroup:ro
+        privileged: true
     
 volumes:
     osg-ca-volume:
