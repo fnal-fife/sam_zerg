@@ -1,7 +1,7 @@
 
 # Dockerfile for the SAM Station
 
-FROM Python:3.6
+FROM python:3.6
 
 COPY sam-station /opt/sam/sam_station
 
