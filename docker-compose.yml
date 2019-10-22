@@ -7,19 +7,20 @@ services:
 
     # Web server/reverse proxy/SSL termination
     apache:
-        image: bjwhitefnal/sam_httpd_server 
+        image: sam_httpd_server 
         ports:
             - "127.0.0.1:8483:8483"
             - "127.0.0.1:8480:8480"
         depends_on:
             - samweb_server
+            - sam_station
         volumes:
             - osg-ca-volume:/etc/grid-security/certificates
 
 
     # SAM Web Server with DB password as a secret
     samweb_server:
-        image: bjwhitefnal/samweb_server
+        image: samweb_server
         environment:
             - EXPERIMENT=sam_bjwhite
         volumes:
@@ -30,13 +31,21 @@ services:
             - samweb_db_secret
 
 
+    # SAM Station
+    sam_station:
+        image: sam_station
+        volumes:
+            - type: bind
+              source: ./sam_station/sam-station
+              target: /opt/sam/sam_station/sam-station
+            - /tmp/x509up_u51660:/opt/sam/sam_station/station_proxy
+              
+
     # Service to handle OSG CA Certificates by updating them and making them available via the named volume 'osg-ca-volume'
     osg_authentication:
         image: bjwhitefnal/osg_authentication
         volumes:
             - osg-ca-volume:/etc/grid-security/certificates
-            - /sys/fs/cgroup:/sys/fs/cgroup:ro
-        privileged: true
     
 volumes:
     osg-ca-volume:

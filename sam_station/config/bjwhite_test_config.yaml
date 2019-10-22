@@ -1,0 +1,43 @@
+
+experiment: sam_bjwhite 
+station: bjwhite_python_station
+sam_base_url: https://apache:8483/sam/sam_bjwhite/api
+#sam_base_url: https://samweb.fnal.gov:8483/sam/samdev/api
+
+authentication:
+    x509-certificate: /opt/sam/sam_station/station_proxy
+    x5089-key: /opt/sam/sam_station/station_proxy
+
+local_db_dir: /var/tmp/
+
+schema_mapping: /opt/sam/sam_station/file_schema_mapping.json
+stage_locations: ['enstore', 'eos']
+state_timeout: 10
+location_refresh_period: 14400
+poll_staging_file_interval: 10
+prestage_reissue_timeout: 180
+
+#dcache:
+#    handler: http
+#    http_limit: 50
+#    dcache_timeout: 10
+#    dcache_uri: 'https://fndca3a.fnal.gov:3880'
+
+monitoring:
+    kafka_cluster_uris: PLAINTEXT lssrv03:9092,lssrv04:9092,lssrv05:9092
+    kafka_monitoring_topic: 'ingest.sam.events' 
+
+logging:
+    level: DEBUG
+    log_dir: /var/log/sam 
+    console: True
+
+web_server:
+    listen_host: '0.0.0.0'
+    listen_port: 21000
+    #external_url: http://sam_station:21000
+
+projects:
+    location_map_file: /opt/sam/sam_station/location_map.yaml
+    project_idle_timeout: 1800
+    per_process_file_stage_limit: 50
