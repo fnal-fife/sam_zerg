@@ -15,7 +15,8 @@ stage_locations: ['enstore', 'eos']
 state_timeout: 10
 location_refresh_period: 14400
 poll_staging_file_interval: 10
-prestage_reissue_timeout: 180
+prestage_reissue_timeout: 30 
+max_prestage_attempts: 2
 
 #dcache:
 #    handler: http
@@ -35,7 +36,7 @@ logging:
 web_server:
     listen_host: '0.0.0.0'
     listen_port: 21000
-    #external_url: http://sam_station:21000
+    external_url: 'https://localhost:8483/sam/sam_bjwhite/stations/sam_bjwhite'
 
 projects:
     location_map_file: /opt/sam/sam_station/location_map.yaml

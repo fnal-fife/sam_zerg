@@ -3,7 +3,7 @@
 
 FROM python:3.6
 
-RUN apt-get update && apt-get -y install gettext-base net-tools && apt-get clean
+RUN apt-get update && apt-get -y install gettext-base net-tools dnsutils && apt-get clean
 RUN pip install --upgrade pip setuptools
 
 COPY ./sam-web/requirements.txt /opt/sam/samweb_server/sam-web/requirements.txt
