@@ -34,6 +34,8 @@ services:
     # SAM Station
     sam_station:
         image: sam_station
+        ports:
+            - "127.0.0.1:4444:4444"
         volumes:
             - type: bind
               source: ./sam_station/sam-station

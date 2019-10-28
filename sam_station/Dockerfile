@@ -14,6 +14,6 @@ COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 
 WORKDIR /opt/sam/sam_station/sam-station
 
-RUN pip install -r requirements.txt pytest
+RUN pip install -r requirements.txt pytest remote-pdb
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
