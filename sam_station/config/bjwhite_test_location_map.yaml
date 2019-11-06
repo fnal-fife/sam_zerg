@@ -4,4 +4,4 @@
     schemas: [ gsiftp, root, srm]
 -   node: .
     locations: [ dcache, enstore, samdev ]
-    schemas: [ gsiftp, root, srm, file ]
+    schemas: [ root, gsiftp, srm, file ]

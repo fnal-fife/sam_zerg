@@ -36,11 +36,16 @@ services:
         image: sam_station
         ports:
             - "127.0.0.1:4444:4444"
+        #environment:
+        #    - SAM_DCACHE_TEST=1
         volumes:
             - type: bind
               source: ./sam_station/sam-station
               target: /opt/sam/sam_station/sam-station
             - /tmp/x509up_u51660:/opt/sam/sam_station/station_proxy
+            - ./sam_station/config/bjwhite_test_config.yaml:/opt/sam/sam_station/sam_station_config.yaml
+            - ./sam_station/config/bjwhite_test_file_schema_mapping.json:/opt/sam/sam_station/schema_mapping.json
+            - ./sam_station/config/bjwhite_test_location_map.yaml:/opt/sam/sam_station/location_map.yaml
               
 
     # Service to handle OSG CA Certificates by updating them and making them available via the named volume 'osg-ca-volume'
