@@ -5,6 +5,7 @@ FROM python:3.6
 
 RUN apt-get update && apt-get -y install gettext-base net-tools dnsutils && apt-get clean
 RUN pip install --upgrade pip setuptools
+RUN pip install remote-pdb
 
 COPY ./sam-web/requirements.txt /opt/sam/samweb_server/sam-web/requirements.txt
 COPY ./config/samweb_server.conf /opt/sam/samweb_server/samweb_server.conf

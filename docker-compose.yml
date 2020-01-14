@@ -21,12 +21,15 @@ services:
     # SAM Web Server with DB password as a secret
     samweb_server:
         image: samweb_server
+        ports:
+            - "127.0.0.1:5555:5555"
         environment:
             - EXPERIMENT=sam_bjwhite
         volumes:
             - type: bind
               source: ./samweb_server/sam-web 
               target: /opt/sam/samweb_server/sam-web
+
         secrets:
             - samweb_db_secret
 
