@@ -3,10 +3,10 @@ import time
 import samweb_client
 
 def main():
-    #samweb = samweb_client.SAMWebClient(experiment='samdev')
-    samweb = samweb_client.SAMWebClient(experiment='sam_bjwhite')
-    #station = 'samdev-ng'
-    station = 'bjwhite_python_station'
+    samweb = samweb_client.SAMWebClient(experiment='samdev')
+    #samweb = samweb_client.SAMWebClient(experiment='sam_bjwhite')
+    station = 'samdev'
+    #station = 'bjwhite_python_station'
     group = 'samdev'
 
     definition = 'bjwhite_ifdh_test'
@@ -19,14 +19,6 @@ def main():
     print samweb.descDefinition(definition)
     
     cpurl = samweb.startProject(project=proj_name, defname=definition, station=station, user='bjwhite', group=group)
-    print 'Sleeping 10sec'
-    time.sleep(10)
-    print 'Sleeping 10sec'
-    time.sleep(10)
-    print 'Sleeping 10sec'
-    time.sleep(10)
-    print 'Sleeping 10sec'
-    time.sleep(10)
     print 'Sleeping 10sec'
     time.sleep(10)
     cpurl = samweb.findProject(proj_name, station)
