@@ -3,10 +3,10 @@ import time
 import samweb_client
 
 def main():
-    samweb = samweb_client.SAMWebClient(experiment='samdev')
-    #samweb = samweb_client.SAMWebClient(experiment='sam_bjwhite')
-    station = 'samdev'
-    #station = 'bjwhite_python_station'
+    #samweb = samweb_client.SAMWebClient(experiment='samdev')
+    samweb = samweb_client.SAMWebClient(experiment='sam_bjwhite')
+    #station = 'samdev'
+    station = 'bjwhite_python_station'
     group = 'samdev'
 
     definition = 'bjwhite_ifdh_test'
@@ -34,14 +34,19 @@ def main():
     print 'recieved furi: ', f_info['filename']
     try:
         while furi:
-            if flag:
-                samweb.setProcessFileStatus(consumer_url, f_info['filename'], 'transferred')
-                time.sleep(1)
-                samweb.setProcessFileStatus(consumer_url, f_info['filename'], 'consumed')
-                flag = False
-            else:
-                samweb.setProcessFileStatus(consumer_url, f_info['filename'], 'skipped')
-                flag = True
+            #if flag:
+            #    samweb.setProcessFileStatus(consumer_url, f_info['filename'], 'transferred')
+            #    time.sleep(1)
+            #    samweb.setProcessFileStatus(consumer_url, f_info['filename'], 'consumed')
+            #    flag = False
+            #else:
+            #    samweb.setProcessFileStatus(consumer_url, f_info['filename'], 'skipped')
+            #    flag = True
+            samweb.setProcessFileStatus(consumer_url, f_info['filename'], 'transferred')
+            time.sleep(1)
+            samweb.setProcessFileStatus(consumer_url, f_info['filename'], 'consumed')
+            time.sleep(1)
+            samweb.setProcessFileStatus(consumer_url, f_info['filename'], 'completed')
 
             f_info = samweb.getNextFile(consumer_url)
             furi = f_info['filename']
