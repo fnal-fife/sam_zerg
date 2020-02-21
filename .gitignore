@@ -3,4 +3,5 @@ secret
 samweb_server/sam-web
 samweb_server/sam-ddl
 sam_station/sam-station
+sam_monitoring/
 sam_httpd_server/cert

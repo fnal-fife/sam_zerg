@@ -6,7 +6,7 @@ version: "3.7"
 services:
 
     # Web server/reverse proxy/SSL termination
-    apache:
+    sam_apache:
         image: sam_httpd_server 
         ports:
             - "127.0.0.1:8483:8483"
@@ -17,7 +17,40 @@ services:
         volumes:
             - osg-ca-volume:/etc/grid-security/certificates
 
+# SAM Monitoring Services
+    # Web server
+    sam_monitoring_apache:
+        image: sam_station_monitor_server
+        ports:
+            - "0.0.0.0:8480:80"
+        depends_on:
+            - sam_station_monitor
+            - sam_landscape_stats
 
+    # sam station monitor application server
+    sam_station_monitor:
+        image: sam_station_monitor
+        volumes:
+            - type: bind
+              source: ./sam_monitoring/sam_station_monitor
+              target: /opt/sam/sam-station-monitor
+
+    # SAM Station Monitor Application Server
+    sam_landscape_stats:
+        image: sam_landscape_stats
+        volumes:
+            - type: bind
+              source: ./sam_monitoring/sam_landscape_stats/sam_stats_graphite.py
+              target: /sam_stats_graphite.py
+            - type: bind
+              source: ./sam_monitoring/sam_landscape_stats/db_read_password
+              target: /db_read_password
+        environment:
+            - GRAPHITE_SERVER_HOST=fifemondata.fnal.gov
+            - GRAPHITE_SERVER_PORT=2004
+            - SAMDBS_PASSWORD_FILE=file:db_read_password
+
+# SAM Main Services
     # SAM Web Server with DB password as a secret
     samweb_server:
         image: samweb_server
