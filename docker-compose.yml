@@ -6,7 +6,7 @@ version: "3.7"
 services:
 
     # Web server/reverse proxy/SSL termination
-    sam_apache:
+    apache:
         image: sam_httpd_server 
         ports:
             - "127.0.0.1:8483:8483"
@@ -14,19 +14,12 @@ services:
         depends_on:
             - samweb_server
             - sam_station
+            - sam_station_monitor
+            - sam_landscape_stats
         volumes:
             - osg-ca-volume:/etc/grid-security/certificates
 
 # SAM Monitoring Services
-    # Web server
-    sam_monitoring_apache:
-        image: sam_station_monitor_server
-        ports:
-            - "0.0.0.0:8480:80"
-        depends_on:
-            - sam_station_monitor
-            - sam_landscape_stats
-
     # sam station monitor application server
     sam_station_monitor:
         image: sam_station_monitor
