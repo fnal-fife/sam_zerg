@@ -19,6 +19,7 @@ location_refresh_period: 14400
 poll_staging_file_interval: 10
 prestage_reissue_timeout: 30 
 max_prestage_attempts: 2
+enable_completed_file_state: True
 
 dcache:
     handler: http
