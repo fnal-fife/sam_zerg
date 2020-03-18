@@ -17,4 +17,6 @@ WORKDIR /opt/sam/samweb_server/sam-web
 
 RUN pip install --no-cache-dir -r requirements.txt pytest uwsgi
 
+EXPOSE 4444
+
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
