@@ -1,66 +1,112 @@
 import os
 import time
 import samweb_client
+import argparse
+import threading
 
-def main():
-    #samweb = samweb_client.SAMWebClient(experiment='samdev')
-    #station = 'samdev'
-    #group = 'samdev'
 
-    samweb = samweb_client.SAMWebClient(experiment='sam_bjwhite')
-    station = 'bjwhite_python_station'
-    group = 'samdev'
-
-    #samweb = samweb_client.SAMWebClient(experiment='gm2')
-    #station = 'gm2'
-    #group = 'gm2'
-
-    definition = 'bjwhite_ifdh_test' # SAMDEV
+'''
+    Useful testing definitions
+    #definition = 'bjwhite_ifdh_test' # SAMDEV
+    #definition = 'bjwhite_scale_test' # SAMDEV (ALL FILES) 
     #definition = 'bjwhite_enstore_dataset_1' # SAMDEV
     #definition = 'poms_depends_466544_1' # GM2
+'''
 
-    proj_name = time.strftime('bjwhite_ifdh_test_%Y%m%d%H_%%d') % os.getpid()
+def parse_args(parser):
+    parser.add_argument('--experiment', default='sam_bjwhite', help='SAM Experiment. Default: sam_bjwhite')
+    parser.add_argument('--defname', default='bjwhite_ifdh_test', help='SAM Definition to run a project on. Default: bjwhite_ifdh_test')
+    parser.add_argument('--station', default='bjwhite_python_station', help='SAM Station to run the project on. Default: bjwhite_python_station')
+    parser.add_argument('--group', default='samdev', help='SAM Group to run the project under. Default: samdev')
+    parser.add_argument('--user', default='bjwhite', help='SAM user that the project will be ran as. Default: bjwhite')
+    parser.add_argument('--node', default='fermicloud106.fnal.gov', help='Hostname of node SAM files will be delivered to?. Default: fermicloud106.fnal.gov')
+    parser.add_argument('--description', default='bjwhite_testing', help='Description to be provided to processes')
+    parser.add_argument('--schemas', default='gsiftp', help='Comma separated list of acceptable protocols. (ex. gsiftp, xrootd, ...). Default: xrootd')
+    parser.add_argument('--num-threads', type=int, default=1, help='Number of threads to run program with. Use consumers-per-thread to controll number of SAM consumers per running thread.')
+    return parser.parse_args()
+
+
+def start_project(samweb, project_name, definition, station, user, group):
+    print 'Starting Project...'
+    project = samweb.startProject(project=project_name, defname=definition, station=station, user=user, group=group)
+    time.sleep(1)
+    project_url = samweb.findProject(project_name, station) # Normally you can get the project_url from the above project info. Test findProject explicitly
+    return project_url
+
+
+def process_file(samweb, consumer_url, consumer_id, file_info):
+    filename = file_info['filename']
+    print 'Consumer %s processing file %s' % (consumer_id, filename)
+
+    time.sleep(1)
+    samweb.setProcessFileStatus(consumer_url, filename, 'transferred') 
+    print '\t%s: File %s: transferred' % (consumer_id, filename)
+
+    time.sleep(1)
+    samweb.setProcessFileStatus(consumer_url, filename, 'consumed') 
+    print '\t%s: File %s: consumed' % (consumer_id, filename)
+
+    time.sleep(2)
+    samweb.setProcessFileStatus(consumer_url, filename, 'completed') 
+    print '\t%s: File %s: completed' % (consumer_id, filename)
+    
+
+def run_sam_consumer(samweb, project_url, node, user, description, schemas):
+    print 'Starting consumer process:'
+    print '\tNode: ', node
+    print '\tUser: ', user 
+    print '\tDescription: ', description 
+    print '\tSchemas: ', schemas 
+
+    consumer_id = samweb.startProcess(project_url, 'demo', 'demo', 'demo', node=node, user=user, description=description, schemas=schemas)
+    consumer_url = samweb.makeProcessUrl(project_url, consumer_id)
+    print '\tCreated consumer: %s, %s\n' % (consumer_id, consumer_url)
+
+    while True:
+        try:
+            file_info = samweb.getNextFile(consumer_url)
+        except samweb_client.exceptions.NoMoreFiles as ex:
+            break
+        process_file(samweb, consumer_url, consumer_id, file_info)
+    samweb.setProcessStatus('completed', project_url, consumer_id)
+    print 'Process %s: completed' % consumer_id
+
+def main():
+    parser = argparse.ArgumentParser()
+    args = parse_args(parser) 
+
+    samweb = samweb_client.SAMWebClient(experiment=args.experiment)
+    definition = args.defname
+    station = args.station
+    group = args.group
+    user = args.user
+    node = args.node
+    description = args.description
+    schemas = args.schemas
+    num_threads = args.num_threads
+
+    project_name = time.strftime('bjwhite_ifdh_test_%Y%m%d%H_%%d') % os.getpid()
 
     print 'Using station: ', station
-    print samweb.descDefinition(definition)
+    print samweb.descDefinition(definition)+'\n'
     
-    cpurl = samweb.startProject(project=proj_name, defname=definition, station=station, user='bjwhite', group=group)
-    print 'Sleeping 3 sec'
-    time.sleep(3)
-    cpurl = samweb.findProject(proj_name, station)
-    consumer_id = samweb.startProcess(cpurl, 'demo', 'demo', 'demo', node='fermicloud172.fnal.gov', user='bjwhite')
-    print 'got cpurl, consumer_id: ', cpurl, consumer_id
-    consumer_url = samweb.makeProcessUrl(cpurl, consumer_id)
-    flag = True
-    try:
-        f_info = samweb.getNextFile(consumer_url)
-    except Exception:
-        samweb.stopProject(cpurl)
-    furi = f_info['filename']
-    print 'recieved furi: ', f_info['filename']
-    try:
-        while furi:
-            #if flag:
-            #    flag = False
-            #    samweb.setProcessFileStatus(consumer_url, f_info['filename'], 'consumed')
-            #else:
-            #    flag = True
-            samweb.setProcessFileStatus(consumer_url, f_info['filename'], 'transferred')
-            time.sleep(1)
-            samweb.setProcessFileStatus(consumer_url, f_info['filename'], 'consumed')
-            time.sleep(1)
-            samweb.setProcessFileStatus(consumer_url, f_info['filename'], 'completed')
+    project_url = start_project(samweb, project_name, definition, station, user, group)
+    print 'Project Url: ', project_url 
 
-            f_info = samweb.getNextFile(consumer_url)
-            furi = f_info['filename']
-            print 'recieved furi: ', f_info['filename']
-    except samweb_client.exceptions.NoMoreFiles:
-        pass
+    if num_threads > 1:
+        threads = [] 
+        for i in range(0, num_threads):
+            threads.append( threading.Thread(target=run_sam_consumer, args=( (samweb, project_url, node, user, description, schemas) ) ) )
+            threads[i].start()
+        for i in range(0, num_threads):
+            threads[i].join()
+    else:
+        run_sam_consumer(samweb, project_url, node, user, description, schemas) 
 
-    samweb.setProcessStatus('completed', cpurl, consumer_id)  
+    print 'All processes completed.'
+    samweb.stopProject(project_url)
+    print 'Ended project: ', project_name
 
-    samweb.stopProject(cpurl)
-    
 
 if __name__ == '__main__':
     main()
