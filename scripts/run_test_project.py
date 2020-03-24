@@ -8,6 +8,7 @@ import threading
 '''
     Useful testing definitions
     #definition = 'bjwhite_ifdh_test' # SAMDEV
+    #definition = 'bjwhite_mid_test' # SAMDEV
     #definition = 'bjwhite_scale_test' # SAMDEV (ALL FILES) 
     #definition = 'bjwhite_enstore_dataset_1' # SAMDEV
     #definition = 'poms_depends_466544_1' # GM2
@@ -23,6 +24,7 @@ def parse_args(parser):
     parser.add_argument('--description', default='bjwhite_testing', help='Description to be provided to processes')
     parser.add_argument('--schemas', default='gsiftp', help='Comma separated list of acceptable protocols. (ex. gsiftp, xrootd, ...). Default: xrootd')
     parser.add_argument('--num-threads', type=int, default=1, help='Number of threads to run program with. Use consumers-per-thread to controll number of SAM consumers per running thread.')
+    parser.add_argument('--enable-skipped', type=bool, default=False, help='When enabled, a fraction of processed files will be skipped, rather than completed.')
     return parser.parse_args()
 
 
@@ -34,24 +36,27 @@ def start_project(samweb, project_name, definition, station, user, group):
     return project_url
 
 
-def process_file(samweb, consumer_url, consumer_id, file_info):
+def process_file(samweb, consumer_url, consumer_id, file_info, skip=False):
     filename = file_info['filename']
     print 'Consumer %s processing file %s' % (consumer_id, filename)
 
     time.sleep(1)
-    samweb.setProcessFileStatus(consumer_url, filename, 'transferred') 
+    samweb.setProcessFileStatus(consumer_url, filename, 'transferred')
     print '\t%s: File %s: transferred' % (consumer_id, filename)
 
     time.sleep(1)
-    samweb.setProcessFileStatus(consumer_url, filename, 'consumed') 
+    samweb.setProcessFileStatus(consumer_url, filename, 'consumed')
     print '\t%s: File %s: consumed' % (consumer_id, filename)
 
     time.sleep(2)
-    samweb.setProcessFileStatus(consumer_url, filename, 'completed') 
+    if skip:
+        samweb.setProcessFileStatus(consumer_url, filename, 'skipped')
+    else:
+        samweb.setProcessFileStatus(consumer_url, filename, 'completed')
     print '\t%s: File %s: completed' % (consumer_id, filename)
     
 
-def run_sam_consumer(samweb, project_url, node, user, description, schemas):
+def run_sam_consumer(samweb, project_url, node, user, description, schemas, enable_skipped):
     print 'Starting consumer process:'
     print '\tNode: ', node
     print '\tUser: ', user 
@@ -62,12 +67,17 @@ def run_sam_consumer(samweb, project_url, node, user, description, schemas):
     consumer_url = samweb.makeProcessUrl(project_url, consumer_id)
     print '\tCreated consumer: %s, %s\n' % (consumer_id, consumer_url)
 
+    count = 0
     while True:
         try:
             file_info = samweb.getNextFile(consumer_url)
         except samweb_client.exceptions.NoMoreFiles as ex:
             break
-        process_file(samweb, consumer_url, consumer_id, file_info)
+        if enable_skipped and count % 5 == 0:
+            process_file(samweb, consumer_url, consumer_id, file_info, skip=True)
+        else:
+            process_file(samweb, consumer_url, consumer_id, file_info)
+        count += 1
     samweb.setProcessStatus('completed', project_url, consumer_id)
     print 'Process %s: completed' % consumer_id
 
@@ -84,6 +94,7 @@ def main():
     description = args.description
     schemas = args.schemas
     num_threads = args.num_threads
+    enable_skipped = args.enable_skipped
 
     project_name = time.strftime('bjwhite_ifdh_test_%Y%m%d%H_%%d') % os.getpid()
 
@@ -96,12 +107,12 @@ def main():
     if num_threads > 1:
         threads = [] 
         for i in range(0, num_threads):
-            threads.append( threading.Thread(target=run_sam_consumer, args=( (samweb, project_url, node, user, description, schemas) ) ) )
+            threads.append( threading.Thread(target=run_sam_consumer, args=( (samweb, project_url, node, user, description, schemas, enable_skipped) ) ) )
             threads[i].start()
         for i in range(0, num_threads):
             threads[i].join()
     else:
-        run_sam_consumer(samweb, project_url, node, user, description, schemas) 
+        run_sam_consumer(samweb, project_url, node, user, description, schemas, enable_skipped)
 
     print 'All processes completed.'
     samweb.stopProject(project_url)
