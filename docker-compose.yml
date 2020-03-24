@@ -14,37 +14,11 @@ services:
         depends_on:
             - samweb_server
             - sam_station
-            - sam_station_monitor
-            - sam_landscape_stats
         volumes:
             - osg-ca-volume:/etc/grid-security/certificates
 
-# SAM Monitoring Services
-    # sam station monitor application server
-    sam_station_monitor:
-        image: sam_station_monitor
-        volumes:
-            - type: bind
-              source: ./sam_monitoring/sam_station_monitor
-              target: /opt/sam/sam-station-monitor
-
-    # SAM Station Monitor Application Server
-    sam_landscape_stats:
-        image: sam_landscape_stats
-        volumes:
-            - type: bind
-              source: ./sam_monitoring/sam_landscape_stats/sam_stats_graphite.py
-              target: /sam_stats_graphite.py
-            - type: bind
-              source: ./sam_monitoring/sam_landscape_stats/db_read_password
-              target: /db_read_password
-        environment:
-            - GRAPHITE_SERVER_HOST=fifemondata.fnal.gov
-            - GRAPHITE_SERVER_PORT=2004
-            - SAMDBS_PASSWORD_FILE=file:db_read_password
-
 # SAM Main Services
-    # SAM Web Server with DB password as a secret
+    #SAM Web Server with DB password as a secret
     samweb_server:
         image: samweb_server
         ports:
@@ -82,6 +56,31 @@ services:
         image: bjwhitefnal/osg_authentication
         volumes:
             - osg-ca-volume:/etc/grid-security/certificates
+
+# SAM Monitoring Services
+    # sam station monitor application server
+    #sam_station_monitor:
+    #    image: sam_station_monitor
+    #    volumes:
+    #        - type: bind
+    #          source: ./sam_monitoring/sam_station_monitor
+    #          target: /opt/sam/sam-station-monitor
+
+    ## SAM Station Monitor Application Server
+    #sam_landscape_stats:
+    #    image: sam_landscape_stats
+    #    volumes:
+    #        - type: bind
+    #          source: ./sam_monitoring/sam_landscape_stats/sam_stats_graphite.py
+    #          target: /sam_stats_graphite.py
+    #        - type: bind
+    #          source: ./sam_monitoring/sam_landscape_stats/db_read_password
+    #          target: /db_read_password
+    #    environment:
+    #        - GRAPHITE_SERVER_HOST=fifemondata.fnal.gov
+    #        - GRAPHITE_SERVER_PORT=2004
+    #        - SAMDBS_PASSWORD_FILE=file:db_read_password
+
     
 volumes:
     osg-ca-volume:
