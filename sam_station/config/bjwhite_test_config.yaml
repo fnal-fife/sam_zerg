@@ -20,6 +20,9 @@ poll_staging_file_interval: 10
 prestage_reissue_timeout: 30 
 max_prestage_attempts: 2
 
+# This is the big testing button for dCache that returns success from the dCache handler in all cache check cases.
+#dcache_return_success: True
+
 dcache:
     handler: http
     http_limit: 50
