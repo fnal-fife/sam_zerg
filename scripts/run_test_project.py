@@ -40,15 +40,15 @@ def process_file(samweb, consumer_url, consumer_id, file_info, skip=False):
     filename = file_info['filename']
     print 'Consumer %s processing file %s' % (consumer_id, filename)
 
-    time.sleep(1)
+    time.sleep(0.5)
     samweb.setProcessFileStatus(consumer_url, filename, 'transferred')
     print '\t%s: File %s: transferred' % (consumer_id, filename)
 
-    time.sleep(1)
+    time.sleep(0.5)
     samweb.setProcessFileStatus(consumer_url, filename, 'consumed')
     print '\t%s: File %s: consumed' % (consumer_id, filename)
 
-    time.sleep(2)
+    time.sleep(1)
     if skip:
         samweb.setProcessFileStatus(consumer_url, filename, 'skipped')
     else:
