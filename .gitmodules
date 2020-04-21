@@ -1,0 +1,12 @@
+[submodule "samweb_server/sam-web"]
+	path = samweb_server/sam-web
+	url = ssh://p-sam-web@cdcvs.fnal.gov/cvs/projects/sam-web
+[submodule "sam_station/sam-station"]
+	path = sam_station/sam-station
+	url = ssh://p-sam-station@cdcvs.fnal.gov/cvs/projects/sam-station
+[submodule "sam-station-monitor"]
+	path = sam-station-monitor
+	url = ssh://p-sam-station-monitor@cdcvs.fnal.gov/cvs/projects/sam-station-monitor
+[submodule "samweb_server/sam-ddl"]
+	path = samweb_server/sam-ddl
+	url = ssh://p-sam-ddl@cdcvs.fnal.gov/cvs/projects/sam-ddl
