@@ -27,7 +27,7 @@ dcache:
     handler: http
     http_limit: 50
     dcache_timeout: 10
-    dcache_uri: 'https://fndca3a.fnal.gov:3880'
+    dcache_uri: 'https://fndca.fnal.gov:3880'
 
 monitoring:
     kafka_cluster_uris: PLAINTEXT lssrv03:9092,lssrv04:9092,lssrv05:9092
