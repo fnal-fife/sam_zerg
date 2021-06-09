@@ -1,0 +1,8 @@
+<%inherit file="base.html" />
+<%def name="title()">
+SAM Station monitoring
+</%def>
+<h1>SAM station monitoring</h1>
+% for s in sites:
+<h2><a href="${site_data[s][1]}">${site_data[s][0]}</a></h2>
+% endfor

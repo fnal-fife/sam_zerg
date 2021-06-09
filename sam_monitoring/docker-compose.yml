@@ -1,0 +1,51 @@
+
+# Start up SAMWeb, Nginx, SAM Station, and Apache
+#
+
+version: "3.7"
+services:
+
+# SAM Monitoring Services
+    sam_monitoring_server:
+        image: sam_monitoring_server
+        ports:
+            - "127.0.0.1:8080:80"
+        depends_on:
+            - sam_station_monitor
+            #- sam_landscape_stats
+        
+    # sam station monitor application server
+    sam_station_monitor:
+        image: sam_station_monitor
+        volumes:
+            - type: bind
+              source: ./sam_station_monitor
+              target: /opt/sam/sam-station-monitor
+
+    # SAM Station Monitor Application Server
+    #sam_landscape_stats:
+    #    image: sam_landscape_stats
+    #    volumes:
+    #        - type: bind
+    #          source: ./sam_landscape_stats/sam_stats_graphite.py
+    #          target: /sam_stats_graphite.py
+    #        - type: bind
+    #          source: ./sam_landscape_stats/db_read_password
+    #          target: /db_read_password
+    #    environment:
+    #        - GRAPHITE_SERVER_HOST=fifemondata.fnal.gov
+    #        - GRAPHITE_SERVER_PORT=2004
+    #        - SAMDBS_PASSWORD_FILE=file:db_read_password
+
+    # Service to handle OSG CA Certificates by updating them and making them available via the named volume 'osg-ca-volume'
+    osg_authentication:
+        image: bjwhitefnal/osg_authentication
+        volumes:
+            - osg-ca-volume:/etc/grid-security/certificates
+    
+volumes:
+    osg-ca-volume:
+    
+secrets:
+    samweb_db_secret:
+        file: ./samweb_server/config/secret/postgres.secret

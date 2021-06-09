@@ -1,0 +1,62 @@
+<%!
+from formatters import formatTime, formatMinSec, formatTime
+%>
+<%inherit file="base.html" />
+<%def name="title()">
+Process ${processinfo.id} [${processinfo.description}]
+</%def>
+<h2>Process ${processinfo.id} [${processinfo.description}]</h2>
+<p>Generated at ${formatTime(projectinfo.updatetime)}</p>
+<table class="projectdetails">
+<tr><th>Process id</th><td>${processinfo.id}</td></tr>
+<tr><th>Node name</th><td>${processinfo.nodeName}</td></tr>
+<tr><th>Status</th><td>${processinfo.status}</td></tr>
+<tr><th>Start time</th><td>${formatTime(processinfo.startTime)}</td></tr>
+<tr><th>Files seen</th><td>${len(processinfo.files)}</td><tr>
+<%
+  lastStateTime, lastActivity = processinfo.lastStateChange()
+  procCompletedTime = processinfo.getCompletedTime()
+  procEndedTime = processinfo.getEndTime()
+%>
+<tr><th>Last activity</th><td>${formatTime(lastStateTime)} (${lastActivity})</td></tr>
+% if procEndedTime is not None:
+    <tr><th>Ended time</th><td>${formatTime(procEndedTime)}</td></tr>
+%endif
+% if procCompletedTime is not None:
+    <tr><th>Completed at</th><td>${formatTime(procCompletedTime)}</td></tr>
+%endif
+
+</table>
+<h3>Files</h3>
+<table>
+    <tr><th>File id</th><th>File name</th><th>Status</th><th>Delivered</th><th>Transferred</th><th>Closed</th><th>Completed</th><th>Waited for</th><th>Transferred for</th><th>Busy for</th></tr>
+%for f in processinfo.files:
+<%
+   if f.status == 'delivered': 
+     completedtime = None
+     endtime = None
+     state='running'
+   elif f.status== 'consumed': 
+     completedtime = None
+     endtime = f.closeTime
+     state='ended'
+   elif f.status== 'transferred':
+     completedtime = None
+     endtime = None
+     state='running'
+   elif f.status== 'cancelled':
+     completedtime = None
+     endtime = f.closeTime
+     state='cancelled'
+   elif f.status== 'completed':
+     endtime = f.closeTime 
+     completedtime= f.completedTime
+     state='completed'
+   else:
+     endtime = None
+     completedtime = None
+     state='error'
+%>
+<tr class="${state}"><td>${f.id}</td><td>${f.name}</td><td>${f.status}</td><td>${formatTime(f.openTime)}</td><td>${formatTime(f.transferTime)}</td><td>${formatTime(endtime)}</td><td>${formatTime(completedtime)}</td><td>${formatMinSec(f.waitedFor)}</td><td>${formatMinSec(f.transferredFor)}</td><td>${formatMinSec(f.busyFor)}</td></tr>
+%endfor
+</table>

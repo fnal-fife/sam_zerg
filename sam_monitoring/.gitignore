@@ -1,0 +1,5 @@
+*.pyc
+mako/
+default.cfg
+rpy2
+cherrypy

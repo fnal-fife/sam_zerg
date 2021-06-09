@@ -1,0 +1,146 @@
+body { color: black; background: white }
+
+.nobreak { white-space: nowrap; }
+
+a img { border: 0 }
+
+table { border-collapse: collapse; border: medium solid black;}
+tr { text-align: center }
+td,th { border: thin solid black; padding: 0.75ex }
+td.warn { color: red }
+
+tr.ended { color: gray }
+tr.failed { color: orange }
+tr.cancelled { color: mediumpurple }
+
+table.projectsummary tr { text-align: left }
+
+table.projectlist { width: 95% }
+table.projectlist th { border-bottom: none; margin-bottom: 0px; padding-bottom: 0px}
+tr.sorticonsrow td { white-space: nowrap; border-top: none; margin-top: 0px; padding-top: 0px }
+
+table.projectdetails { width: 70%}
+table.projectdetails tr { text-align: left }
+td.projectcol { width: 25em; }
+table.processlist { width: 95% }
+
+svg {
+  shape-rendering: crispEdges;
+}
+
+.plots .title {
+    font-size: 16px;
+}
+
+.plots svg {
+    margin: 15px;
+}
+
+.plots div.tooltip {   
+  position: absolute;           
+  text-align: center;           
+  padding: 4px;             
+  font: 12px sans-serif;        
+  background: lightyellow;   
+  border: 0px;      
+  border-radius: 8px;           
+  pointer-events: none;         
+}
+
+svg {
+    shape-rendering: crispEdges 
+}
+
+path.pcwaiting, path.medianwait {
+  fill: none;
+  stroke-width: 1.5;
+  stroke: blue;
+  shape-rendering: auto;
+  stroke-linejoin: round;
+}
+
+#waittimes_plot .bar {
+  fill: red;
+}
+
+#waittimes_plot .bar:hover {
+  fill: brown;
+}
+
+#transfertimes_plot .bar {
+  fill: fuchsia;
+}
+
+#transfertimes_plot .bar:hover {
+  fill: purple;
+}
+
+#busytimes_plot .bar {
+    fill: green;
+}
+#busytimes_plot .bar:hover {
+    fill: darkgreen;
+}
+
+#delivery_plot path.closed, #delivery_plot line.closed {
+    fill: none;
+    stroke-width: 1.5px;
+    stroke: green;
+}
+
+#delivery_plot path.delivered, #delivery_plot line.delivered {
+    fill: none;
+    stroke-width: 1.5px;
+    stroke: steelblue;
+}
+
+#n_processes_plot .nprocesses { fill: none; 
+    stroke: black; 
+    stroke-width: 1px;
+    /*fill: white;*/
+}
+#n_processes_plot .nidle { fill: white; stroke: black; stroke-width: 1px; }
+#n_processes_plot .ntransfer { fill: steelblue }
+#n_processes_plot .nbusy { fill: green }
+
+#process_plot g.bad, #process_plot g.error { opacity: 0.5; }
+#process_plot line { stroke: black; }
+/* the gaps between bars my be less than one pixel. So enable anti-aliasing rather than crisp edges */
+#process_plot rect { shape-rendering: geometricPrecision; } 
+#process_plot rect.consumed { fill: green; }
+#process_plot rect.consumed:hover { fill: darkgreen; }
+#process_plot rect.delivered { fill: steelblue; }
+#process_plot rect.delivered:hover { fill: darkblue; }
+#process_plot rect.intransfer { fill: steelblue; }
+#process_plot rect.intransfer:hover { fill: darkblue; }
+#process_plot rect.transferred { fill: lime; }
+#process_plot rect.transferred:hover { fill: darkgreen; }
+#process_plot rect.skipped { fill: orange; }
+#process_plot rect.skipped:hover { fill: darkorange; }
+#process_plot rect.failed { fill: red; }
+#process_plot rect.failed:hover { fill: darkred; }
+#process_plot rect.cancelled { fill: mediumpurple; }
+#process_plot rect.cancelled:hover { fill: purple; }
+#process_plot rect.completed { fill: black; }
+#process_plot rect.completed:hover { fill: black; }
+#process_plot rect.unknown { fill: lightslategray; }
+#process_plot rect.unknown:hover { fill: dimgray; }
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  stroke-width: 1px;
+}
+
+.legend text {
+    font: 13px serif;
+}
+
+/*.x.axis path {
+  display: none;
+}*/

@@ -1,0 +1,118 @@
+<%!
+from formatters import formatMinSec, formatMins, formatTime
+%>
+<%inherit file="base.html" />
+<%def name="title()">
+${stationinfo.name} station
+</%def>
+<h2>${stationinfo.name} station</h2>
+<p>Generated at ${formatTime(stationinfo.updatetime)}</p>
+<h3>
+  % if not stationinfo.projects:
+There are no projects
+  % elif stationinfo.nrunningprojects==1:
+There is 1 running project
+  % else:
+There are ${stationinfo.nrunningprojects} running projects
+  % endif
+</h3>
+<table class="projectsummary">
+	<tr><th>Active processes</th><td>${stationinfo.nactiveprocs}</td></tr>
+	<tr><th>Waiting processes</th><td>${stationinfo.nwaitprocs}
+			% if stationinfo.nactiveprocs>0:
+			( ${'%0.2f' % (stationinfo.nwaitprocs*100.0/stationinfo.nactiveprocs)}% )
+			% endif
+		</td></tr>
+</table>
+<div class="plots">
+ <div id="process_wait_history"></div>
+ <!--<img src='process_wait_times.png' alt="Process wait times" height="480" width="480">-->
+ <div id="process_wait_times"></div>
+ <!-- <img src='process_wait_history.csv' alt="Process wait history" height="480" width="720">-->
+ <script>make_top_level_plots("${base_path}/${site}/stations/${stationinfo.name}/process_wait_history.json");</script>
+</div>
+<p>
+% if showcompleted == False:
+<a href="?sort=${sorttype}&amp;order=${sortorder}&amp;completed=1">Show recent completed projects</a>
+% else:
+<a href="?sort=${sorttype}&amp;order=${sortorder}&amp;completed=0">Hide completed projects</a>
+% endif
+| <a href="${base_path}/${site}/stations/${stationinfo.name}/processes">List all processes</a></p>
+<%def name="sort(key)">\
+% if not (sorttype == key and sortorder == 'asc'):
+<a href="?sort=${key}&amp;order=asc&amp;completed=${int(showcompleted)}"><img src="${base_path}/static/up_arrow_grey.gif" alt="sort ascending"></a>\
+% elif (sorttype == key):
+<img src="${base_path}/static/up_arrow_orange.gif" alt="sorted ascending">\
+% endif
+% if not (sorttype == key and sortorder == 'desc'):
+<a href="?sort=${key}&amp;order=desc&amp;completed=${int(showcompleted)}"><img src="${base_path}/static/down_arrow_grey.gif" alt="sort descending"></a>\
+% elif (sorttype == key):
+<img src="${base_path}/static/down_arrow_orange.gif" alt="sorted descending">\
+% endif
+</%def>
+<table class="projectlist" id="list">
+<tr class="headerrow"><th>Project name</th><th>Project Id</th><th>Owner</th><th>Status</th><th>Files in snapshot</th><th>Files seen</th><th>Processes</th><th>Waiting processes</th><th>Last activity</th>
+<th>Longest waiting process</th><th>Median wait time (per&nbsp;file)</th><th>Median transfer time (per&nbsp;file)</th><th>Median busy time (per&nbsp;file)</th>
+</tr>
+<tr class="sorticonsrow"><td>${sort(key='name')}</td><td>${sort(key='id')}</td><td>${sort(key='owner')}</td><td>${sort(key='status')}</td><td>${sort(key='snapfiles')}</td>
+<td>${sort(key='seenfiles')}</td><td>${sort(key='nprocs')}</td><td>${sort(key='nwait')}</td><td>${sort(key='lastactivity')}</td>
+<td>${sort(key='longestwait')}</td><td>${sort(key='medianwait')}</td><td>${sort(key='mediantransfer')}</td><td>${sort(key='medianbusy')}</td>
+</tr>
+% for p in sorted(stationinfo.projects.values(),key=sortkey,reverse=(sortorder=='desc')):
+<%
+  if p.isRunning():
+    nwait = p.countWaitingProcesses()
+    state="running"
+  else: 
+    nwait = 0
+    state = "ended"
+  medianwait, mediantransfer, medianbusy = p.getMedianTimes()
+%>
+% if showcompleted or state == "running":
+<tr class="${state}"><td class="projectcol"><a href="${base_path}/${site}/stations/${stationinfo.name}/projects/${p.name}">${p.name| h}</a></td>
+<td>${p.id}</td><td>${p.owner}</td>
+<td>${p.status}</td><td>${p.fileCount}</td>
+<td>
+% if p.invalid:
+?
+% else:
+${p.filesSeen}
+% endif
+</td>
+<td>
+% if p.invalid:
+Too many
+% else:
+${len(p.processes)}
+% endif
+</td>
+<td>
+% if nwait:
+${nwait}
+% else:
+-
+% endif
+</td>
+<td>
+    % if p.lastStatus:
+<span class="nobreak">${p.lastStatus}</span> at <span class="nobreak">${formatTime(p.lastActivityTime)}</span>
+    % else :
+-
+    % endif
+</td>
+% if nwait:
+<% 
+  waittime, waitstate = p.longestWaitingProcess()
+  waitfor = p.updatetime-waittime
+  if waitfor > waitwarntime: cls = "warn"
+  else: cls = "normal"
+%>
+<td class="${cls}">${formatMins(waitfor)} (${waitstate})</td>
+% else:
+<td>-</td>
+% endif
+<td>${formatMinSec(medianwait)}</td><td>${formatMinSec(mediantransfer)}</td><td>${formatMinSec(medianbusy)}</td>
+</tr>
+% endif
+  % endfor
+</table>
