@@ -29,23 +29,3 @@ build-samstation:
 
 build-samstation-nc:
 	docker build --no-cache -t sam_station sam_station
-
-push-all:
-	docker tag sam_httpd_server bjwhitefnal/sam_httpd_server
-	docker push bjwhitefnal/sam_httpd_server
-	docker tag sam_station bjwhitefnal/sam_station
-	docker push bjwhitefnal/sam_station
-	docker tag samweb_server bjwhitefnal/samweb_server
-	docker push bjwhitefnal/samweb_server
-
-push-sam-httpd:
-	docker tag sam_httpd_server bjwhitefnal/sam_httpd_server
-	docker push bjwhitefnal/sam_httpd_server
-
-push-samweb:
-	docker tag sam_station bjwhitefnal/sam_station
-	docker push bjwhitefnal/sam_station
-
-push-samstation:
-	docker tag samweb_server bjwhitefnal/samweb_server
-	docker push bjwhitefnal/samweb_server
