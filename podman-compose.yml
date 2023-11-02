@@ -15,6 +15,12 @@ services:
             - samweb_server
             - sam_station
         volumes:
+            - type: bind
+              source: emptydir
+              target: /opt/sam/html
+            - type: bind
+              source: emptydir
+              target: /usr/local/apache2/run
             - osg-ca-volume:/etc/grid-security/certificates
 
 # SAM Main Services
@@ -45,7 +51,7 @@ services:
             - type: bind
               source: ./sam_station/sam-station
               target: /opt/sam/sam_station/sam-station
-            - /tmp/x509up_u51660:/opt/sam/sam_station/station_proxy
+            - /tmp/x509up:/opt/sam/sam_station/station_proxy
             - ./sam_station/config/bjwhite_test_config.yaml:/opt/sam/sam_station/sam_station_config.yaml
             - ./sam_station/config/bjwhite_test_file_schema_mapping.json:/opt/sam/sam_station/file_schema_mapping.json
             - ./sam_station/config/bjwhite_test_location_map.yaml:/opt/sam/sam_station/location_map.yaml
@@ -53,7 +59,7 @@ services:
 
     # Service to handle OSG CA Certificates by updating them and making them available via the named volume 'osg-ca-volume'
     osg_authentication:
-        image: bjwhitefnal/osg_authentication
+        image: docker.io/bjwhitefnal/osg_authentication
         volumes:
             - osg-ca-volume:/etc/grid-security/certificates
 

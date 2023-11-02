@@ -1,7 +1,7 @@
 
 # Dockerfile for the SAMWeb Server
 
-FROM python:3.6
+FROM docker.io/library/python:3.6
 
 RUN apt-get update && apt-get -y install gettext-base net-tools dnsutils && apt-get clean
 RUN pip install --upgrade pip setuptools

@@ -31,7 +31,7 @@ dcache:
     refresh_timestamps: True
 
 monitoring:
-    kafka_cluster_uris: PLAINTEXT lssrv03:9092,lssrv04:9092,lssrv05:9092
+    kafka_cluster_uris: PLAINTEXT lskafka.fnal.gov:9092
     kafka_monitoring_topic: 'ingest.sam.events' 
 
 logging:

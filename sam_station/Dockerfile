@@ -1,7 +1,7 @@
 
 # Dockerfile for the SAM Station
 
-FROM python:3.6
+FROM docker.io/library/python:3.6
 
 RUN apt-get update && apt-get -y install gettext-base net-tools && apt-get clean
 RUN pip install --upgrade pip setuptools && mkdir -p /opt/sam/sam_station/sam-station
