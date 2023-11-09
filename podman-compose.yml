@@ -7,6 +7,7 @@ services:
 
     # Web server/reverse proxy/SSL termination
     apache:
+        container_name: apache
         image: sam_httpd_server 
         ports:
             - "127.0.0.1:8483:8483"
@@ -26,6 +27,7 @@ services:
 # SAM Main Services
     #SAM Web Server with DB password as a secret
     samweb_server:
+        container_name: samweb_server
         image: samweb_server
         ports:
             - "127.0.0.1:5555:5555"
@@ -42,6 +44,7 @@ services:
 
     # SAM Station
     sam_station:
+        container_name: sam_station
         image: sam_station
         ports:
             - "127.0.0.1:4444:4444"
