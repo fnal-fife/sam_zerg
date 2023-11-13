@@ -29,8 +29,10 @@ services:
     samweb_server:
         container_name: samweb_server
         image: samweb_server
-        ports:
-            - "127.0.0.1:5555:5555"
+        depends_on:
+            - osg_authentication
+        #ports:
+        #    - "127.0.0.1:5555:5555"
         environment:
             - EXPERIMENT=sam_bjwhite
         volumes:
@@ -46,8 +48,10 @@ services:
     sam_station:
         container_name: sam_station
         image: sam_station
+        depends_on:
+            - osg_authentication
         ports:
-            - "127.0.0.1:4444:4444"
+            - "127.0.0.1:21000:21000"
         #environment:
         #    - SAM_DCACHE_TEST=1
         volumes:

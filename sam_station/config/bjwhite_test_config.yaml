@@ -2,7 +2,6 @@
 experiment: sam_bjwhite 
 station: bjwhite_python_station
 sam_base_url: https://apache:8483/sam/sam_bjwhite/api
-#sam_base_url: https://samweb.fnal.gov:8483/sam/samdev/api
 
 disable_station_registration: True
 
@@ -29,10 +28,6 @@ dcache:
     dcache_timeout: 10
     dcache_uri: 'https://fndca.fnal.gov:3880'
     refresh_timestamps: True
-
-monitoring:
-    kafka_cluster_uris: PLAINTEXT lskafka.fnal.gov:9092
-    kafka_monitoring_topic: 'ingest.sam.events' 
 
 logging:
     level: DEBUG

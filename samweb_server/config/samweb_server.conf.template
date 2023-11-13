@@ -12,10 +12,6 @@ tools.proxy.on = True
 [samweb]
 
 experiment = 'sam_bjwhite'
-#instance_name = 'server'
-#require_authorization = True
-sam-web-registry-base-url = 'http://samweb.fnal.gov:8480/sam_web_registry'
-tier = 'dev'
 samweb-port = '8483'
 authorized_base_url = 'https://apache:8483'
 instance-designation = 'bjwhite_samweb_zerg'
@@ -23,7 +19,12 @@ instance-designation = 'bjwhite_samweb_zerg'
 default_project_url = '/api/running/projects/'
 file_access_schema_map = './file_schema_mapping_example.json'
 admin_users = ['illingwo','swhite', 'bjwhite']
-station_urls = { 'sam_bjwhite' : 'https://$SAM_ZERG_APACHE_IP:8483/sam/sam_bjwhite/stations/sam_bjwhite' }
+station_urls = { 'sam_bjwhite' : 'https://localhost:8483/sam/sam_bjwhite/stations/sam_bjwhite' }
+
+#instance_name = 'server'
+#require_authorization = True
+#sam-web-registry-base-url = 'http://samweb.fnal.gov:8480/sam_web_registry'
+#tier = 'dev'
 
 [database]
 
@@ -36,7 +37,7 @@ password = '$DBPASS'
 
 session_params = { 'join_collapse_limit' : 20, 'from_collapse_limit' : 20, 'random_page_cost' : 8, 'statement_timeout' : '50min', 'lock_timeout' : '5s' }
 
-user_dimension_query_limit = {'default' : 1, 'illingwo' : 10}
+user_dimension_query_limit = {'default' : 1, 'illingwo' : 10, 'bjwhite' : 10}
 
 [graphite]
 
