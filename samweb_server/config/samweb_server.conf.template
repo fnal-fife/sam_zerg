@@ -29,10 +29,10 @@ station_urls = { 'sam_bjwhite' : 'https://localhost:8483/sam/sam_bjwhite/station
 [database]
 
 username = 'samdbs'
-role = 'samdev'
-database = 'samdev'
-host = 'sampgsdbdev.fnal.gov'
-port = '5433'
+role = 'sam_bjwhite'
+database = 'sam_bjwhite'
+host = 'sam_dev_db'
+port = '5432'
 password = '$DBPASS'
 
 session_params = { 'join_collapse_limit' : 20, 'from_collapse_limit' : 20, 'random_page_cost' : 8, 'statement_timeout' : '50min', 'lock_timeout' : '5s' }

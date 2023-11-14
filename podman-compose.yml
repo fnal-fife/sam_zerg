@@ -4,6 +4,14 @@
 
 version: "3.7"
 services:
+    sam_dev_db:
+        image:
+            sam_dev_db
+        environment:
+            POSTGRES_USER: sam_bjwhite
+            POSTGRES_PASSWORD: secret
+        expose:
+            - "5432"
 
     # Web server/reverse proxy/SSL termination
     apache:
