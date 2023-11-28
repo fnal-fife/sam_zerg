@@ -29,7 +29,7 @@ station_urls = { 'sam_bjwhite' : 'https://localhost:8483/sam/sam_bjwhite/station
 [database]
 
 username = 'samdbs'
-role = 'sam_bjwhite'
+#role = 'sam_bjwhite'
 database = 'sam_bjwhite'
 host = 'sam_dev_db'
 port = '5432'
