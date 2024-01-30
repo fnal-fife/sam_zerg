@@ -5,7 +5,6 @@ FROM docker.io/library/httpd:2.2
 
 #RUN apt-get update -y && apt-get install -y net-tools
 COPY mime.types /etc/mime.types
-COPY ./cert /opt/sam/httpd/certs
 COPY config/conf/httpd.conf /usr/local/apache2/conf/httpd.conf
 COPY config/conf.d /usr/local/apache2/conf.d
 
