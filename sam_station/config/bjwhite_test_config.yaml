@@ -1,6 +1,6 @@
 
 experiment: sam_bjwhite 
-station: bjwhite_python_station
+station: sam_bjwhite
 sam_base_url: https://apache:8483/sam/sam_bjwhite/api
 
 disable_station_registration: True
