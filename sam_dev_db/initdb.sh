@@ -6,7 +6,8 @@ pg_init_dir=/docker-entrypoint-initdb.d
 mkdir -p $pg_init_dir
 cat > $pg_init_dir/00initialize.sql <<-EOF
 CREATE USER samread;
-CREATE USER samdbs;
+CREATE ROLE sam_bjwhite WITH CREATEDB;
+GRANT ALL PRIVILEGES ON schema public TO sam_bjwhite;
 EOF
 sed "s/XXXX_ROLE_XXXX/$PG_DB/g" ${startdir}/tables.sql > $pg_init_dir/01tables.sql
 sed "s/XXXX_ROLE_XXXX/$PG_DB/g" ${startdir}/primary_keys.sql > $pg_init_dir/02primary_keys.sql

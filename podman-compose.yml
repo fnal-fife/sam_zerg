@@ -8,10 +8,9 @@ services:
         image:
             sam_dev_db
         environment:
-            POSTGRES_USER: sam_bjwhite
-            POSTGRES_PASSWORD: secret
-        #expose:
-        #    - "5432"
+            POSTGRES_USER: samdbs
+            POSTGRES_PASSWORD: 12345
+            POSTGRES_DB: sam_bjwhite
 
     # Web server/reverse proxy/SSL termination
     apache:
