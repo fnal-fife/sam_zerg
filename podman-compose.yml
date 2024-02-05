@@ -81,9 +81,10 @@ services:
 
     # Service to handle OSG CA Certificates by updating them and making them available via the named volume 'osg-ca-volume'
     osg_authentication:
-        image: docker.io/bjwhitefnal/osg_authentication
+        image: docker.io/bjwhitefnal/grid-security-files:32
+        command: ["/bin/bash", "-c", "chmod 755 /out/ && cp -rv --preserve=links /grid-certificates/* /out/"]
         volumes:
-            - osg-ca-volume:/etc/grid-security/certificates
+            - osg-ca-volume:/out/
 
 # SAM Monitoring Services
     # sam station monitor application server
