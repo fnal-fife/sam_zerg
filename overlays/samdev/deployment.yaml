@@ -1,0 +1,77 @@
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache
+  labels:
+    app: apache
+    release: sam-zerg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apache
+      release: sam-zerg
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: apche
+        release: sam-zerg
+    spec:
+      serviceAccountName: useroot
+      #volumes:
+      #- name: config
+      #  secret:
+      #    secretName: fnal-rucio-server.config.common
+      containers:
+        - name: apache
+          image: "sam_httpd_server"
+          imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 200m
+              memory: 600Mi
+            requests:
+              cpu: 200m
+              memory: 600Mi
+          #volumeMounts:
+          #- name: config
+          #  mountPath: /opt/rucio/etc/conf.d/10_common.json
+          #  subPath: common.json
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: https
+              containerPort: 443
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /sam/sam_bjwhite/api
+              scheme: HTTPS
+              port: 8483
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /sam/sam_bjwhite/api
+              scheme: HTTPS
+              port: 8483
+            initialDelaySeconds: 10
+            periodSeconds: 20
+            timeoutSeconds: 5
+          #env:
+            #- name: RUCIO_CFG_DATABASE_DEFAULT
+            #  valueFrom:
+            #    secretKeyRef:
+            #      key: db-connstr.txt
+            #      name: fnal-db-connstr
+---
