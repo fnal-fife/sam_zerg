@@ -37,3 +37,11 @@ build-samdb:
 
 build-samdb-nc:
 	podman build --no-cache -t sam_dev_db sam_dev_db
+
+push-all:
+	podman tag sam_httpd_server imageregistry.fnal.gov/sam-zerg/sam-httpd-server:latest
+	podman push imageregistry.fnal.gov/sam-zerg/sam-httpd-server:latest
+	podman tag samweb_server imageregistry.fnal.gov/sam-zerg/samweb-server:latest
+	podman push imageregistry.fnal.gov/sam-zerg/samweb-server:latest
+	podman tag sam_station imageregistry.fnal.gov/sam-zerg/sam-station:latest
+	podman push imageregistry.fnal.gov/sam-zerg/sam-station:latest

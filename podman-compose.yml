@@ -15,7 +15,7 @@ services:
     # Web server/reverse proxy/SSL termination
     apache:
         container_name: apache
-        image: sam_httpd_server 
+        image: imageregistry.fnal.gov:443/sam-zerg/sam-httpd-server
         ports:
             - "127.0.0.1:8483:8483"
             - "127.0.0.1:8480:8480"
@@ -41,7 +41,7 @@ services:
     #SAM Web Server with DB password as a secret
     samweb_server:
         container_name: samweb_server
-        image: samweb_server
+        image: imageregistry.fnal.gov:443/sam-zerg/samweb-server
         depends_on:
             - osg_authentication
             - sam_dev_db
@@ -61,7 +61,7 @@ services:
     # SAM Station
     sam_station:
         container_name: sam_station
-        image: sam_station
+        image: imageregistry.fnal.gov:443/sam-zerg/sam-station
         depends_on:
             - osg_authentication
             - samweb_server
@@ -89,7 +89,7 @@ services:
 # SAM Monitoring Services
     # sam station monitor application server
     #sam_station_monitor:
-    #    image: sam_station_monitor
+    #    image: sam-station-monitor
     #    volumes:
     #        - type: bind
     #          source: ./sam_monitoring/sam_station_monitor
@@ -97,7 +97,7 @@ services:
 
     ## SAM Station Monitor Application Server
     #sam_landscape_stats:
-    #    image: sam_landscape_stats
+    #    image: sam-landscape-stats
     #    volumes:
     #        - type: bind
     #          source: ./sam_monitoring/sam_landscape_stats/sam_stats_graphite.py
