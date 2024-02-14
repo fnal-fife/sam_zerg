@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sam-httpd-server
+  labels:
+    app: sam-httpd-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sam-httpd-server
+  template:
+    metadata:
+      labels:
+        app: sam-httpd-server
+    spec:
+      containers:
+      - name: sam-httpd-server
+        image: imageregistry.fnal.gov/sam-zerg/sam-httpd-server:latest
+        ports:
+        - containerPort: 8443
+          name: https
+        - containerPort: 8480
+          name: http
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
