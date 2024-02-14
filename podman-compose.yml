@@ -59,8 +59,6 @@ services:
             - samweb_server
         ports:
             - "127.0.0.1:21000:21000"
-        #environment:
-        #    - SAM_DCACHE_TEST=1
         volumes:
             - type: bind
               source: ./sam_station/sam-station
