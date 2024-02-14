@@ -1,4 +1,7 @@
 *.swp
 secret
+secrets
+.secret
+.secrets
 sam_periodic/
 sam_httpd_server/cert
