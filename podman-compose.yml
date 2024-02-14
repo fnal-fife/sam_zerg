@@ -39,8 +39,6 @@ services:
         depends_on:
             - osg_authentication
             - sam_dev_db
-        #ports:
-        #    - "127.0.0.1:5555:5555"
         environment:
             - EXPERIMENT=sam_bjwhite
         volumes:
