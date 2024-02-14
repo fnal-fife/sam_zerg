@@ -24,12 +24,6 @@ services:
             - sam_station
         volumes:
             - type: bind
-              source: emptydir
-              target: /opt/sam/html
-            - type: bind
-              source: emptydir
-              target: /usr/local/apache2/run
-            - type: bind
               source: ./sam_httpd_server/cert/server.crt
               target: /opt/sam/httpd/certs/server.crt
             - type: bind
