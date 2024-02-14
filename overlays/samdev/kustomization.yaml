@@ -2,3 +2,11 @@
 resources:
 - deployments.yaml
 - services.yaml
+
+secretGenerator:
+- name: server-hostcert
+  files:
+  - server.crt=secrets/server.crt
+- name: server-hostkey
+  files:
+  - server.key=secrets/server.key

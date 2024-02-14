@@ -14,6 +14,13 @@ spec:
       labels:
         app: sam-httpd-server
     spec:
+      volumes:
+      - name: server-hostcert
+        secret:
+          secretName: server-hostcert
+      - name: server-hostkey
+        secret:
+          secretName: server-hostkey
       containers:
       - name: sam-httpd-server
         image: imageregistry.fnal.gov/sam-zerg/sam-httpd-server:latest
@@ -29,3 +36,10 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "200m"
+        volumeMounts:
+        - name: server-hostcert
+          mountPath: /opt/sam/httpd/certs/server.crt
+          subPath: server.crt
+        - name: server-hostkey
+          mountPath: /opt/sam/httpd/certs/server.key
+          subPath: server.key
