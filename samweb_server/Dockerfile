@@ -7,7 +7,10 @@ RUN apt-get update && apt-get -y install gettext-base net-tools dnsutils && apt-
 RUN pip install --upgrade pip setuptools
 RUN pip install remote-pdb
 
-COPY ./sam-web/requirements.txt /opt/sam/samweb_server/sam-web/requirements.txt
+# Copy SAM code into image.
+COPY ./sam-web /opt/sam/samweb_server/sam-web
+
+# Copy SAM configuration files into image
 COPY ./config/samweb_server.conf.template /opt/sam/samweb_server/samweb_server.conf.template
 COPY ./config/file_schema_mapping.json /opt/sam/samweb_server/file_schema_mapping.json
 COPY ./config/uwsgi_sam_bjwhite.ini /opt/sam/samweb_server/uwsgi_sam_bjwhite.ini
