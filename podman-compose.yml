@@ -33,8 +33,8 @@ services:
 
 # SAM Main Services
     #SAM Web Server with DB password as a secret
-    samweb_server:
-        container_name: samweb_server
+    samweb-server:
+        container_name: samweb-server
         image: imageregistry.fnal.gov:443/sam-zerg/samweb-server
         depends_on:
             - osg_authentication
@@ -51,8 +51,8 @@ services:
 
 
     # SAM Station
-    sam_station:
-        container_name: sam_station
+    sam-station:
+        container_name: sam-station
         image: imageregistry.fnal.gov:443/sam-zerg/sam-station
         depends_on:
             - osg_authentication
