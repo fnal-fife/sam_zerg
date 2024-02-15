@@ -57,8 +57,6 @@ services:
         depends_on:
             - osg_authentication
             - samweb_server
-        ports:
-            - "127.0.0.1:21000:21000"
         volumes:
             - type: bind
               source: ./sam_station/sam-station
