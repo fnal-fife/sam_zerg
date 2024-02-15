@@ -1,19 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sam-httpd-server
+  name: apache
   labels:
-    app: sam-httpd-server
+    app: apache
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: sam-httpd-server
+      app: apache
   template:
     metadata:
       labels:
-        app: sam-httpd-server
+        app: apache
     spec:
+      serviceAccountName: useroot
       volumes:
       - name: server-hostcert
         secret:
@@ -21,8 +22,17 @@ spec:
       - name: server-hostkey
         secret:
           secretName: server-hostkey
+      - name: ca-volume
+        emptyDir: {}
+      initContainers:
+      - name: grid-certs
+        image: docker.io/bjwhitefnal/grid-security-files:32
+        command: ["/bin/bash", "-c", "chmod 755 /out/ && cp -rv --preserve=links /grid-certificates/* /out/"]
+        volumeMounts:
+        - name: ca-volume
+          mountPath: /out/
       containers:
-      - name: sam-httpd-server
+      - name: apache
         image: imageregistry.fnal.gov/sam-zerg/sam-httpd-server:latest
         ports:
         - containerPort: 8443
@@ -43,3 +53,5 @@ spec:
         - name: server-hostkey
           mountPath: /opt/sam/httpd/certs/server.key
           subPath: server.key
+        - name: ca-volume
+          mountPath: /etc/grid-security/certificates
