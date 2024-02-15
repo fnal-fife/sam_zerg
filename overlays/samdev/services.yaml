@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: sam-httpd-server-service
+  name: apache
   labels:
-    app: sam-httpd-server
+    app: apache
 spec:
   selector:
-    app: sam-httpd-server
+    app: apache
   ports:
   - name: http
     port: 8480
@@ -15,3 +15,13 @@ spec:
     port: 8483
     targetPort: 8483
   externalIPs: [ 131.225.218.183 ]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: samweb-server
+  labels:
+    app: samweb-server
+spec:
+  selector:
+    app: samweb-server

@@ -55,3 +55,31 @@ spec:
           subPath: server.key
         - name: ca-volume
           mountPath: /etc/grid-security/certificates
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: samweb-server
+  labels:
+    app: samweb-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: samweb-server
+  template:
+    metadata:
+      labels:
+        app: samweb-server
+    spec:
+      #serviceAccountName: useroot
+      containers:
+      - name: samweb-server
+        image: imageregistry.fnal.gov/sam-zerg/samweb-server:latest
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
