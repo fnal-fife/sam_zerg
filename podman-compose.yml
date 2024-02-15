@@ -41,6 +41,9 @@ services:
             - sam_dev_db
         environment:
             - EXPERIMENT=sam_bjwhite
+            - DB_DATABASE=sam_bjwhite
+            - DB_HOST=sam_dev_db
+            - DB_PORT=5432
         volumes:
             - type: bind
               source: ./samweb_server/sam-web 
