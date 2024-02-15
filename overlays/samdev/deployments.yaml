@@ -72,10 +72,13 @@ spec:
       labels:
         app: samweb-server
     spec:
-      #serviceAccountName: useroot
+      serviceAccountName: useroot
       containers:
       - name: samweb-server
         image: imageregistry.fnal.gov/sam-zerg/samweb-server:latest
+        ports:
+        - containerPort: 3000
+          name: uwsgi 
         resources:
           requests:
             memory: "128Mi"

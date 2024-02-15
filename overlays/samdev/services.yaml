@@ -25,3 +25,7 @@ metadata:
 spec:
   selector:
     app: samweb-server
+  ports:
+  - name: uwsgi
+    port: 3000
+    targetPort: 3000
