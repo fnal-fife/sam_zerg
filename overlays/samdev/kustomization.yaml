@@ -10,3 +10,15 @@ secretGenerator:
 - name: server-hostkey
   files:
   - server.key=secrets/server.key
+- name: db-database
+  files:
+  - db-database=secrets/db-database
+- name: db-hostname
+  files:
+  - db-hostname=secrets/db-hostname
+- name: db-port
+  files:
+  - db-port=secrets/db-port
+- name: db-pass
+  files:
+  - db-pass=secrets/db-pass

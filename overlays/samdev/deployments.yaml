@@ -22,6 +22,18 @@ spec:
       - name: server-hostkey
         secret:
           secretName: server-hostkey
+      - name: db-database
+        secret:
+          secretName: db-database
+      - name: db-hostname
+        secret:
+          secretName: db-hostname
+      - name: db-port
+        secret:
+          secretName: db-port
+      - name: db-pass
+        secret:
+          secretName: db-pass
       - name: ca-volume
         emptyDir: {}
       initContainers:
@@ -73,12 +85,48 @@ spec:
         app: samweb-server
     spec:
       serviceAccountName: useroot
+      volumes:
+      - name: db-database
+        secret:
+          secretName: db-database
+      - name: db-hostname
+        secret:
+          secretName: db-hostname
+      - name: db-port
+        secret:
+          secretName: db-port
+      - name: db-pass
+        secret:
+          secretName: db-pass
       containers:
       - name: samweb-server
         image: imageregistry.fnal.gov/sam-zerg/samweb-server:latest
         ports:
         - containerPort: 3000
           name: uwsgi 
+        env:
+        - name: EXPERIMENT
+          value: samdev
+        - name: DB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: db-database
+              key: db-database
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: db-hostname
+              key: db-hostname
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: db-port
+              key: db-port
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: db-pass
+              key: db-pass
         resources:
           requests:
             memory: "128Mi"
