@@ -134,3 +134,37 @@ spec:
           limits:
             memory: "256Mi"
             cpu: "200m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sam-station
+  labels:
+    app: sam-station
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sam-station
+  template:
+    metadata:
+      labels:
+        app: sam-station
+    spec:
+      serviceAccountName: useroot
+      containers:
+      - name: samweb-server
+        image: imageregistry.fnal.gov/sam-zerg/sam-station:latest
+        ports:
+        - containerPort: 21000
+          name: uwsgi 
+        #env:
+        #- name: EXPERIMENT
+        #  value: samdev
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
