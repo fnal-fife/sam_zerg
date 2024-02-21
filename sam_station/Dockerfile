@@ -10,9 +10,6 @@ RUN pip install --upgrade pip setuptools && mkdir -p /opt/sam/sam_station/sam-st
 COPY ./sam-station /opt/sam/sam_station/sam-station
 
 # Copy SAM configuration needs into the image
-COPY ./config/bjwhite_test_config.yaml /opt/sam/sam_station/sam_station_config.yaml
-COPY ./config/bjwhite_test_file_schema_mapping.json /opt/sam/sam_station/file_schema_mapping.json
-COPY ./config/bjwhite_test_location_map.yaml /opt/sam/sam_station/location_map.yaml
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
 
 WORKDIR /opt/sam/sam_station/sam-station
