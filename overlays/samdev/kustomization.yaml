@@ -22,3 +22,12 @@ secretGenerator:
 - name: db-pass
   files:
   - db-pass=secrets/db-pass
+- name: station-config
+  files:
+  - station-config=secrets/samdev.conf
+- name: station-schema-map
+  files:
+  - station-schema-map=secrets/file_schema_mapping.json
+- name: station-location-map
+  files:
+  - station-location-map=secrets/location_map.yaml
