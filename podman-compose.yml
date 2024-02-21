@@ -15,7 +15,7 @@ services:
     # Web server/reverse proxy/SSL termination
     apache:
         container_name: apache
-        image: imageregistry.fnal.gov:443/sam-zerg/sam-httpd-server
+        image: sam-httpd-server
         ports:
             - "127.0.0.1:8483:8483"
             - "127.0.0.1:8480:8480"
@@ -35,7 +35,7 @@ services:
     #SAM Web Server with DB password as a secret
     samweb-server:
         container_name: samweb-server
-        image: imageregistry.fnal.gov:443/sam-zerg/samweb-server
+        image: samweb-server
         depends_on:
             - osg_authentication
             - sam_dev_db
@@ -56,7 +56,7 @@ services:
     # SAM Station
     sam-station:
         container_name: sam-station
-        image: imageregistry.fnal.gov:443/sam-zerg/sam-station
+        image: sam-station
         depends_on:
             - osg_authentication
             - samweb_server
@@ -64,8 +64,13 @@ services:
             - type: bind
               source: ./sam_station/sam-station
               target: /opt/sam/sam_station/sam-station
-            - /tmp/x509up:/opt/sam/sam_station/station_proxy
-            - ./sam_station/config/bjwhite_test_config.yaml:/opt/sam/sam_station/sam_station_config.yaml
+            - type: bind
+              source: ./sam_httpd_server/cert/server.crt
+              target: /opt/sam/sam_station/server.crt
+            - type: bind
+              source: ./sam_httpd_server/cert/server.key
+              target: /opt/sam/sam_station/server.key
+            - ./sam_station/config/bjwhite_test_config.conf:/opt/sam/sam_station/sam_station_config.conf
             - ./sam_station/config/bjwhite_test_file_schema_mapping.json:/opt/sam/sam_station/file_schema_mapping.json
             - ./sam_station/config/bjwhite_test_location_map.yaml:/opt/sam/sam_station/location_map.yaml
               
