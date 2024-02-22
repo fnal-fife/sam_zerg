@@ -29,3 +29,17 @@ spec:
   - name: uwsgi
     port: 3000
     targetPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sam-station
+  labels:
+    app: sam-station
+spec:
+  selector:
+    app: sam-station
+  ports:
+  - name: uwsgi
+    port: 21000
+    targetPort: 21000

@@ -24,10 +24,13 @@ secretGenerator:
   - db-pass=secrets/db-pass
 - name: station-config
   files:
-  - station-config=secrets/samdev.conf
+  - station-config=configs/samdev.conf
 - name: station-schema-map
   files:
-  - station-schema-map=secrets/file_schema_mapping.json
+  - station-schema-map=configs/file_schema_mapping.json
 - name: station-location-map
   files:
-  - station-location-map=secrets/location_map.yaml
+  - station-location-map=configs/location_map.yaml
+- name: httpd-samweb-servers-config
+  files:
+  - httpd-samweb-servers-config=configs/sam_web_servers.conf

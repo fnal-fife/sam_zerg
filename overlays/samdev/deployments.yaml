@@ -22,18 +22,9 @@ spec:
       - name: server-hostkey
         secret:
           secretName: server-hostkey
-      - name: db-database
+      - name: httpd-samweb-servers-config
         secret:
-          secretName: db-database
-      - name: db-hostname
-        secret:
-          secretName: db-hostname
-      - name: db-port
-        secret:
-          secretName: db-port
-      - name: db-pass
-        secret:
-          secretName: db-pass
+          secretName: httpd-samweb-servers-config
       - name: ca-volume
         emptyDir: {}
       initContainers:
@@ -67,6 +58,9 @@ spec:
           subPath: server.key
         - name: ca-volume
           mountPath: /etc/grid-security/certificates
+        - name: httpd-samweb-servers-config
+          mountPath: /usr/local/apache2/conf.d/sam_web_servers.conf
+          subPath: httpd-samweb-servers-config
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -107,6 +101,8 @@ spec:
         env:
         - name: EXPERIMENT
           value: samdev
+        - name : STATION_CLIENT_URL
+          value: samdev.fnal.gov
         - name: DB_DATABASE
           valueFrom:
             secretKeyRef:
@@ -174,9 +170,6 @@ spec:
         ports:
         - containerPort: 21000
           name: uwsgi 
-        #env:
-        #- name: EXPERIMENT
-        #  value: samdev
         resources:
           requests:
             memory: "128Mi"
