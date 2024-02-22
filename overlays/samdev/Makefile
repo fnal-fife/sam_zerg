@@ -2,7 +2,7 @@
 # podman Tasks
 # Build the containers
 
-deploy:
+apply:
 	kubectl apply -k .
 
 build-all-nc: # Build all with --no-cache
