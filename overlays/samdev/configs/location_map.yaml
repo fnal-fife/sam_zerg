@@ -1,0 +1,7 @@
+
+-   node: cern.ch
+    locations: [ cern-eos, dcache, enstore, samdev ]
+    schemas: [ gsiftp, root, srm]
+-   node: .
+    locations: [ dcache, enstore, samdev ]
+    schemas: [ root, gsiftp, srm, file ]

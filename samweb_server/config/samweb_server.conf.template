@@ -5,7 +5,7 @@ server.socket_port = 3000
 #log.screen = True
 
 plugindir = "test/plugins"
-samwebapi = "/sam/sam_bjwhite"
+samwebapi = "/sam/$EXPERIMENT"
 
 tools.proxy.on = True
 
@@ -19,7 +19,7 @@ instance-designation = 'samweb_zerg_$EXPERIMENT'
 default_project_url = '/api/running/projects/'
 file_access_schema_map = './file_schema_mapping_example.json'
 admin_users = ['illingwo','swhite', 'bjwhite']
-station_urls = { '$EXPERIMENT' : 'https://localhost:8483/sam/$EXPERIMENT/stations/$EXPERIMENT' }
+station_urls = { '$EXPERIMENT' : 'https://$STATION_CLIENT_URL:8483/sam/$EXPERIMENT/stations/$EXPERIMENT' }
 
 [database]
 

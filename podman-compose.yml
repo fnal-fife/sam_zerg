@@ -60,6 +60,8 @@ services:
         depends_on:
             - osg_authentication
             - samweb_server
+        environment:
+            - STATION_CLIENT_URL=samdev.fnal.gov
         volumes:
             - type: bind
               source: ./sam_station/sam-station
