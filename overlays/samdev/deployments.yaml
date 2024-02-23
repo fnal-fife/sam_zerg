@@ -44,11 +44,11 @@ spec:
           name: http
         resources:
           requests:
-            memory: "128Mi"
+            memory: "500Mi"
             cpu: "100m"
           limits:
-            memory: "256Mi"
-            cpu: "200m"
+            memory: "1200Mi"
+            cpu: "1000m"
         volumeMounts:
         - name: server-hostcert
           mountPath: /opt/sam/httpd/certs/server.crt
@@ -125,11 +125,11 @@ spec:
               key: db-pass
         resources:
           requests:
-            memory: "128Mi"
+            memory: "500Mi"
             cpu: "100m"
           limits:
-            memory: "256Mi"
-            cpu: "200m"
+            memory: "2500Mi"
+            cpu: "2000m"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -172,11 +172,11 @@ spec:
           name: uwsgi 
         resources:
           requests:
-            memory: "128Mi"
+            memory: "500Mi"
             cpu: "100m"
           limits:
-            memory: "256Mi"
-            cpu: "200m"
+            memory: "2500Mi"
+            cpu: "2000m"
         volumeMounts:
         - name: server-hostcert
           mountPath: /opt/sam/sam_station/server.crt
@@ -226,8 +226,8 @@ spec:
             memory: "128Mi"
             cpu: "100m"
           limits:
-            memory: "256Mi"
-            cpu: "200m"
+            memory: "1000Mi"
+            cpu: "1000m"
         volumeMounts:
         - name: station-monitor-db-config
           mountPath: /opt/sam/sam-station-monitor/default.cfg
