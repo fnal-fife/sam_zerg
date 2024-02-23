@@ -193,3 +193,42 @@ spec:
         - name: station-location-map
           mountPath: /opt/sam/sam_station/location_map.yaml
           subPath: station-location-map
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sam-station-monitor
+  labels:
+    app: sam-station-monitor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sam-station-monitor
+  template:
+    metadata:
+      labels:
+        app: sam-station-monitor
+    spec:
+      serviceAccountName: useroot
+      volumes:
+      - name: station-monitor-db-config
+        secret:
+          secretName: station-monitor-db-config
+      containers:
+      - name: sam-station-monitor
+        image: imageregistry.fnal.gov/sam-zerg/sam-station-monitor:latest
+        ports:
+        - containerPort: 8081
+          name: uwsgi 
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        volumeMounts:
+        - name: station-monitor-db-config
+          mountPath: /opt/sam/sam-station-monitor/default.cfg
+          subPath: station-monitor-db-config

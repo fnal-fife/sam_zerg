@@ -34,3 +34,6 @@ secretGenerator:
 - name: httpd-samweb-servers-config
   files:
   - httpd-samweb-servers-config=configs/sam_web_servers.conf
+- name: station-monitor-db-config
+  files:
+  - station-monitor-db-config=secrets/station_monitor.cfg

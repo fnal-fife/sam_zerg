@@ -39,14 +39,10 @@ build-samdb-nc:
 	podman build --no-cache -t sam_dev_db sam_dev_db
 
 build-sammonitoring:
-    podman build -t sam_station_monitor sam_monitoring/sam_station_monitor
-    #podman build -t sam_monitoring_server sam_monitoring_server
-    #podman build -t sam_landscape_stats sam_landscape_stats
+	podman build -t sam_station_monitor sam-station-monitor/sam_station_monitor
 
 build-sammonitoring-nc:
-    podman build --no-cache -t sam_station_monitor sam_station_monitor
-    #podman build --no-cache -t sam_monitoring_server sam_monitoring_server
-    #podman build --no-cache -t sam_landscape_stats sam_landscape_stats
+	podman build --no-cache -t sam_station_monitor sam-station-monitor/sam_station_monitor
 
 
 push-all:
