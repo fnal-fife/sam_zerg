@@ -1,7 +1,7 @@
 
 # Dockerfile for the SAM Apache Server
 
-FROM docker.io/library/httpd:2.2
+FROM docker.io/library/httpd:2.4
 
 #RUN apt-get update -y && apt-get install -y net-tools
 COPY mime.types /etc/mime.types
