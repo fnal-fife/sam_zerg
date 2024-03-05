@@ -7,12 +7,14 @@ build-all: # Build all
 	podman build -t sam_station sam_station
 	podman build -t samweb_server samweb_server
 	podman build -t sam_dev_db sam_dev_db
+	podman build -t sam_station_monitor sam-station-monitor/sam_station_monitor
 
 build-all-nc: # Build all with --no-cache
 	podman build --no-cache -t sam_httpd_server sam_httpd_server
 	podman build --no-cache -t sam_station sam_station
 	podman build --no-cache -t samweb_server samweb_server
 	podman build --no-cache -t sam_dev_db sam_dev_db
+	podman build --no-cache -t sam_station_monitor sam-station-monitor/sam_station_monitor
 
 build-samhttpd:
 	podman build -t sam_httpd_server sam_httpd_server
