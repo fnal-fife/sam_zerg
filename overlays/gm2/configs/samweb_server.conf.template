@@ -1,0 +1,38 @@
+[global]
+
+server.socket_host = '127.0.0.1'
+server.socket_port = 3000
+#log.screen = True
+
+plugindir = "test/plugins"
+samwebapi = "/sam/$EXPERIMENT"
+
+tools.proxy.on = True
+
+[samweb]
+
+experiment = '$EXPERIMENT'
+samweb-port = '8483'
+authorized_base_url = 'https://$STATION_CLIENT_URL:8483'
+instance-designation = 'samweb_zerg_$EXPERIMENT'
+
+default_project_url = '/api/running/projects/'
+file_access_schema_map = './file_schema_mapping_example.json'
+admin_users = ['illingwo','swhite', 'bjwhite']
+station_urls = { '$EXPERIMENT-okd01' : 'https://$STATION_CLIENT_URL:8483/sam/$EXPERIMENT/stations/$EXPERIMENT-okd01' }
+
+[database]
+
+username = 'samdbs'
+database = '$DB_DATABASE'
+host = '$DB_HOST'
+port = '$DB_PORT'
+password = '$DB_PASS'
+
+session_params = { 'join_collapse_limit' : 20, 'from_collapse_limit' : 20, 'random_page_cost' : 8, 'statement_timeout' : '50min', 'lock_timeout' : '5s' }
+
+user_dimension_query_limit = {'default' : 1, 'illingwo' : 10, 'bjwhite' : 10}
+
+[graphite]
+
+server = 'lsdataitb.fnal.gov:2003'
