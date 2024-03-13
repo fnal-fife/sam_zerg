@@ -80,6 +80,9 @@ spec:
     spec:
       serviceAccountName: useroot
       volumes:
+      - name: samweb-server-config-template
+        secret:
+          secretName: samweb-server-config-template
       - name: db-database
         secret:
           secretName: db-database
@@ -98,6 +101,10 @@ spec:
         ports:
         - containerPort: 3000
           name: uwsgi 
+        volumeMounts:
+        - name: samweb-server-config-template
+          mountPath: /opt/sam/samweb_server/samweb_server.conf.template
+          subPath: samweb_server.conf.template
         env:
         - name: EXPERIMENT
           value: samdev
