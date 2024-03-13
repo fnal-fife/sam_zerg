@@ -24,7 +24,7 @@ secretGenerator:
   - db-pass=secrets/db-pass
 - name: station-config
   files:
-  - station-config=configs/samdev.conf
+  - station-config=configs/sam_station.conf
 - name: station-schema-map
   files:
   - station-schema-map=configs/file_schema_mapping.json
