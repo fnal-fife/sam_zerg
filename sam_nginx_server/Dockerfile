@@ -6,9 +6,8 @@ FROM docker.io/library/nginx:1.25
 #COPY mime.types /etc/mime.types
 #COPY config/conf/httpd.conf /usr/local/apache2/conf/httpd.conf
 #COPY config/conf.d /usr/local/apache2/conf.d
-COPY ./config/nginx.conf /etc/nginx/conf.d/default.conf
-COPY ./config/sam_web_servers.conf /etc/nginx/conf.d/sam_web_servers.conf
-
+RUN rm /etc/nginx/conf.d/*
+COPY ./config/nginx.conf /etc/nginx/nginx.conf
 
 # Make /opt/sam/html DocumentRoot
 #RUN mkdir -p /opt/sam/html

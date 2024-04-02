@@ -14,8 +14,8 @@ services:
 
     # Web server/reverse proxy/SSL termination
     apache:
-        container_name: apache
-        image: sam-httpd-server
+        container_name: nginx
+        image: sam-nginx-server
         ports:
             - "127.0.0.1:8483:8483"
             - "127.0.0.1:8480:8480"
@@ -24,11 +24,11 @@ services:
             - sam_station
         volumes:
             - type: bind
-              source: ./sam_httpd_server/cert/server.crt
-              target: /opt/sam/httpd/certs/server.crt
+              source: ./sam_nginx_server/cert/server.crt
+              target: /opt/sam/nginx/certs/server.crt
             - type: bind
-              source: ./sam_httpd_server/cert/server.key
-              target: /opt/sam/httpd/certs/server.key
+              source: ./sam_nginx_server/cert/server.key
+              target: /opt/sam/nginx/certs/server.key
             - osg-ca-volume:/etc/grid-security/certificates
 
 # SAM Main Services
@@ -67,10 +67,10 @@ services:
               source: ./sam_station/sam-station
               target: /opt/sam/sam_station/sam-station
             - type: bind
-              source: ./sam_httpd_server/cert/server.crt
+              source: ./sam_nginx_server/cert/server.crt
               target: /opt/sam/sam_station/server.crt
             - type: bind
-              source: ./sam_httpd_server/cert/server.key
+              source: ./sam_nginx_server/cert/server.key
               target: /opt/sam/sam_station/server.key
             - ./sam_station/config/bjwhite_test_config.conf:/opt/sam/sam_station/sam_station_config.conf
             - ./sam_station/config/bjwhite_test_file_schema_mapping.json:/opt/sam/sam_station/file_schema_mapping.json
