@@ -31,9 +31,9 @@ secretGenerator:
 - name: station-location-map
   files:
   - station-location-map=configs/location_map.yaml
-- name: httpd-samweb-servers-config
+- name: nginx-config
   files:
-  - httpd-samweb-servers-config=configs/sam_web_servers.conf
+  - nginx-config=configs/nginx.conf
 - name: station-monitor-db-config
   files:
   - station-monitor-db-config=secrets/station_monitor.cfg

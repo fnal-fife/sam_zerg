@@ -25,9 +25,6 @@ spec:
       - name: nginx-config
         secret:
           secretName: nginx-config
-      - name: nginx-samweb-servers-config
-        secret:
-          secretName: nginx-samweb-servers-config
       - name: ca-volume
         emptyDir: {}
       initContainers:
@@ -62,11 +59,8 @@ spec:
         - name: ca-volume
           mountPath: /etc/grid-security/certificates
         - name: nginx-config
-          mountPath: /etc/nginx/conf.d/default.conf
+          mountPath: /etc/nginx/nginx.conf
           subPath: nginx-config
-        - name: nginx-samweb-servers-config
-          mountPath: /etc/nginx/conf.d/sam_web_servers.conf
-          subPath: nginx-samweb-servers-config
 ---
 apiVersion: apps/v1
 kind: Deployment
