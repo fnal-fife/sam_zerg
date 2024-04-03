@@ -8,6 +8,8 @@ FROM docker.io/library/nginx:1.25
 #COPY config/conf.d /usr/local/apache2/conf.d
 RUN rm /etc/nginx/conf.d/*
 COPY ./config/nginx.conf /etc/nginx/nginx.conf
+COPY ./ngx_gridproxy_module.so /etc/nginx/modules/ngx_gridproxy_module.so
+
 
 # Make /opt/sam/html DocumentRoot
 #RUN mkdir -p /opt/sam/html
