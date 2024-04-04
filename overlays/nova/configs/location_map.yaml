@@ -1,0 +1,7 @@
+-   node: nid[0-9]+$
+    locations: [ nersc ]
+    schemas: [ file ]
+
+-   node: .
+    locations: [ dcache, enstore ]
+    schemas: [ gsiftp, root, srm ]
