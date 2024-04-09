@@ -18,8 +18,20 @@ instance-designation = 'samweb_zerg_$EXPERIMENT'
 
 default_project_url = '/api/running/projects/'
 file_access_schema_map = './file_schema_mapping_example.json'
-admin_users = ['illingwo','swhite', 'bjwhite']
-station_urls = { '$EXPERIMENT-int' : 'https://$STATION_CLIENT_URL:8483/sam/$EXPERIMENT/stations/$EXPERIMENT-int' }
+admin_users = ['illingwo','mengel','bjwhite','anorman', 'mgheith', 'kreymer', 'dbox', "diesburg","nsmayer","aurisano","gsdavies", "novaraw", "novapro", "janzirn", "jcoelho","eflumerf", "group", "pbuitrag", "jteheran", "rocco", "barnali", "rtoner", "pbuitrag", "vito", "mazzacan" , "satish", "tamsett", "rwmurphy","bckhouse","bzamoran", "ahimmel", "garzogli", "dingpf"]
+station_urls = { 
+    '$EXPERIMENT' : 'https://$STATION_CLIENT_URL:8483/sam/$EXPERIMENT/stations/$EXPERIMENT',
+    '$EXPERIMENT-int' : 'https://$STATION_CLIENT_URL:8483/sam/$EXPERIMENT/stations/$EXPERIMENT-int' }
+new_dimensions = True
+new_subrun = True
+
+# Allow WLCG tokens from these issuers
+token_audience = ['https://wlcg.cern.ch/jwt/v1/any', 'https://samweb.fnal.gov']
+token_issuers = ["https://test.cilogon.org/fermilab", "https://cilogon.org/fermilab"]
+
+[defeditor]
+
+editor = True
 
 [database]
 

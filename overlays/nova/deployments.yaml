@@ -141,6 +141,69 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: sam-station-int
+  labels:
+    app: sam-station-int
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sam-station-int
+  template:
+    metadata:
+      labels:
+        app: sam-station-int
+    spec:
+      serviceAccountName: useroot
+      volumes:
+      - name: server-hostcert
+        secret:
+          secretName: server-hostcert
+      - name: server-hostkey
+        secret:
+          secretName: server-hostkey
+      - name: station-config
+        secret:
+          secretName: station-config
+      - name: station-schema-map
+        secret:
+          secretName: station-schema-map
+      - name: station-location-map
+        secret:
+          secretName: station-location-map
+      containers:
+      - name: sam-station
+        image: imageregistry.fnal.gov/sam-zerg/sam-station:latest
+        ports:
+        - containerPort: 21000
+          name: uwsgi 
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "100m"
+          limits:
+            memory: "2500Mi"
+            cpu: "2000m"
+        volumeMounts:
+        - name: server-hostcert
+          mountPath: /opt/sam/sam_station/server.crt
+          subPath: server.crt
+        - name: server-hostkey
+          mountPath: /opt/sam/sam_station/server.key
+          subPath: server.key
+        - name: station-config
+          mountPath: /opt/sam/sam_station/sam_station_config.conf
+          subPath: station-config
+        - name: station-schema-map
+          mountPath: /opt/sam/sam_station/file_schema_mapping.json
+          subPath: station-schema-map
+        - name: station-location-map
+          mountPath: /opt/sam/sam_station/location_map.yaml
+          subPath: station-location-map
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
   name: sam-station
   labels:
     app: sam-station
