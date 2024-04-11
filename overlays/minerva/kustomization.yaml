@@ -1,0 +1,42 @@
+
+resources:
+- deployments.yaml
+- services.yaml
+
+secretGenerator:
+- name: server-hostcert
+  files:
+  - server.crt=secrets/server.crt
+- name: server-hostkey
+  files:
+  - server.key=secrets/server.key
+- name: db-database
+  files:
+  - db-database=secrets/db-database
+- name: db-hostname
+  files:
+  - db-hostname=secrets/db-hostname
+- name: db-port
+  files:
+  - db-port=secrets/db-port
+- name: db-pass
+  files:
+  - db-pass=secrets/db-pass
+- name: station-config
+  files:
+  - station-config=configs/sam_station.conf
+- name: station-schema-map
+  files:
+  - station-schema-map=configs/file_schema_mapping.json
+- name: station-location-map
+  files:
+  - station-location-map=configs/location_map.yaml
+- name: nginx-config
+  files:
+  - nginx-config=configs/nginx.conf
+- name: station-monitor-db-config
+  files:
+  - station-monitor-db-config=secrets/station_monitor.cfg
+- name: samweb-server-config-template
+  files:
+  - samweb_server.conf.template=configs/samweb_server.conf.template
