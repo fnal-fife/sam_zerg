@@ -1,0 +1,44 @@
+[global]
+
+server.socket_host = '127.0.0.1'
+server.socket_port = 3000
+#log.screen = True
+
+plugindir = "test/plugins"
+samwebapi = "/sam/$EXPERIMENT"
+
+tools.proxy.on = True
+
+[samweb]
+
+experiment = '$EXPERIMENT'
+new_dimensions = True
+new_subrun = True
+samweb-port = '8483'
+authorized_base_url = 'https://$STATION_CLIENT_URL:8483'
+instance-designation = 'samweb_zerg_$EXPERIMENT'
+
+default_project_url = '/api/running/projects/'
+file_access_schema_map = './file_schema_mapping_example.json'
+admin_users = ['illingwo','mengel','greenlee',"diesburg",'bcarls','uboonepro','yuntse','echurch','sowjanya','kterao', "pbuitrag", "jteheran", "vito", "qhuang", "mazzacan", "kirby" ]
+station_urls = { '$EXPERIMENT' : 'https://$STATION_CLIENT_URL:8483/sam/$EXPERIMENT/stations/$EXPERIMENT' }
+
+# allow WLCG tokens from these issuers
+token_audience = ['https://wlcg.cern.ch/jwt/v1/any', 'https://samweb.fnal.gov']
+token_issuers = ['https://test.cilogon.org/uboone', 'https://cilogon.org/uboone', 'https://cilogon.org/fermilab']
+
+[database]
+
+username = 'samdbs'
+database = '$DB_DATABASE'
+host = '$DB_HOST'
+port = '$DB_PORT'
+password = '$DB_PASS'
+session_params = { 'join_collapse_limit' : 20, 'from_collapse_limit' : 20, 'random_page_cost' : 8, 'statement_timeout' : '50min', 'lock_timeout' : '5s' }
+user_dimension_query_limit = {'default' : 5, 'uboonepro' : 10}
+use_param_type_id_in_queries = True
+
+
+[graphite]
+
+server = 'lsdataitb.fnal.gov:2003'
