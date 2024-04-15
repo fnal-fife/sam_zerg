@@ -21,6 +21,9 @@ file_access_schema_map = './file_schema_mapping_example.json'
 admin_users = ['illingwo','swhite', 'bjwhite']
 station_urls = { '$EXPERIMENT' : 'https://$STATION_CLIENT_URL:8483/sam/$EXPERIMENT/stations/$EXPERIMENT' }
 
+token_audience = ['https://wlcg.cern.ch/jwt/v1/any', 'https://samweb.fnal.gov']
+token_issuers = ['https://test.cilogon.org/fermilab', 'https://test.cilogon.org/des', 'https://test.cilogon.org/dune', 'https://test.cilogon.org/gm2', 'https://test.cilogon.org/mu2e', 'https://test.cilogon.org/sbnd', 'https://cilogon.org/fermilab', 'https://cilogon.org/des', 'https://cilogon.org/dune', 'https://cilogon.org/gm2', 'https://cilogon.org/mu2e', 'https://cilogon.org/sbnd']
+
 [database]
 
 username = 'samdbs'
