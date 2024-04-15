@@ -1,0 +1,3 @@
+-   node: .
+    locations: [ fnal-dcache, dcache, enstore, cnafdisk, cnaftape, slacdisk ]
+    schemas: [ root, https, gsiftp, srm, file ]
