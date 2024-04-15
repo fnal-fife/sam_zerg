@@ -1,0 +1,62 @@
+# NERSC
+-   node: nid[0-9]+$
+    locations: [ nersc ]
+    schemas: [ file ]
+
+# 
+# Domains east of atlantic
+#
+-   node: \.cz$
+    locations: [particle.cz|cern-eos, echo.stfc.ac.uk|hep.manchester.ac.uk|hep.ph.ic.ac.uk|in2p3.fr|lancs.ac.uk|nikhef.nl|pp.rl.ac.uk|qmul.ac.uk, dcache, enstore, castor]
+    schemas: [root, https, gsiftp, srm]
+-   node: \.es$
+    locations: [cern-eos, echo.stfc.ac.uk|hep.manchester.ac.uk|hep.ph.ic.ac.uk|in2p3.fr|lancs.ac.uk|nikhef.nl|particle.cz|pp.rl.ac.uk|qmul.ac.uk, dcache, enstore, castor]
+    schemas: [root, https, gsiftp, srm]
+-   node: \.in$
+    locations: [cern-eos, echo.stfc.ac.uk, hep.manchester.ac.uk|hep.ph.ic.ac.uk|in2p3.fr|lancs.ac.uk|nikhef.nl|particle.cz|pp.rl.ac.uk|qmul.ac.uk, dcache, enstore, castor]
+    schemas: [root, https, gsiftp, srm]
+-   node: \.fr$
+    locations: [in2p3.fr, cern-eos, echo.stfc.ac.uk|hep.manchester.ac.uk|hep.ph.ic.ac.uk|lancs.ac.uk|nikhef.nl|particle.cz|pp.rl.ac.uk|qmul.ac.uk, dcache, enstore, castor]
+    schemas: [root, https, gsiftp, srm]
+-   node: \.nl$
+    locations: [nikhef.nl, cern-eos, echo.stfc.ac.uk|hep.manchester.ac.uk|hep.ph.ic.ac.uk|in2p3.fr|lancs.ac.uk|particle.cz|pp.rl.ac.uk|qmul.ac.uk, dcache, enstore, castor]
+    schemas: [root, https, gsiftp, srm]
+-   node: \.ru$
+    locations: [cern-eos, echo.stfc.ac.uk|hep.manchester.ac.uk|hep.ph.ic.ac.uk|in2p3.fr|lancs.ac.uk|nikhef.nl|particle.cz|pp.rl.ac.uk|qmul.ac.uk, dcache, enstore, castor]
+    schemas: [root, https, gsiftp, srm]
+-   node: \.uk$
+    locations: [lancs.ac.uk|echo.stfc.ac.uk|hep.manchester.ac.uk|hep.ph.ic.ac.uk|pp.rl.ac.uk|qmul.ac.uk, cern-eos, in2p3.fr|nikhef.nl|particle.cz, dcache, enstore, castor]
+    schemas: [root, https, gsiftp, srm]
+# UK has .hep and .priv nodes...
+-   node: \.hep$
+    locations: [lancs.ac.uk|echo.stfc.ac.uk|hep.manchester.ac.uk|hep.ph.ic.ac.uk|pp.rl.ac.uk|qmul.ac.uk, cern-eos, in2p3.fr|nikhef.nl|particle.cz, dcache, enstore, castor]
+    schemas: [root, https, gsiftp, srm]
+-   node: \.priv$
+    locations: [lancs.ac.uk|echo.stfc.ac.uk|hep.manchester.ac.uk|hep.ph.ic.ac.uk|pp.rl.ac.uk|qmul.ac.uk, cern-eos, in2p3.fr|nikhef.nl|particle.cz, dcache, enstore, castor]
+    schemas: [root, https, gsiftp, srm]
+#
+# Domains west of atlantic
+# 
+-   node: \.br$
+    locations: [dcache, enstore, cern-eos, echo.stfc.ac.uk, hep.manchester.ac.uk|hep.ph.ic.ac.uk|in2p3.fr|lancs.ac.uk|nikhef.nl|particle.cz|pp.rl.ac.uk|qmul.ac.uk, castor]
+    schemas: [root, https, gsiftp, srm]
+-   node: \.arbutus$
+    locations: [dcache, enstore, cern-eos, echo.stfc.ac.uk, hep.manchester.ac.uk|hep.ph.ic.ac.uk|in2p3.fr|lancs.ac.uk|nikhef.nl|particle.cz|pp.rl.ac.uk|qmul.ac.uk,  castor]
+    schemas: [root, https, gsiftp, srm]
+-   node: \.ca$
+    locations: [dcache, enstore, cern-eos, echo.stfc.ac.uk, hep.manchester.ac.uk|hep.ph.ic.ac.uk|in2p3.fr|lancs.ac.uk|nikhef.nl|particle.cz|pp.rl.ac.uk|qmul.ac.uk,  castor]
+    schemas: [root, https, gsiftp, srm]
+-   node: \.(edu|gov|hep|org|net|us)$
+    locations: [dcache, enstore, cern-eos, echo.stfc.ac.uk, castor]
+    schemas: [root, https, gsiftp, srm]
+-   node: \.pr$
+    locations: [dcache, enstore, cern-eos, echo.stfc.ac.uk, hep.manchester.ac.uk|hep.ph.ic.ac.uk|in2p3.fr|lancs.ac.uk|nikhef.nl|particle.cz|pp.rl.ac.uk|qmul.ac.uk, castor]
+    schemas: [root, https, gsiftp, srm]
+#
+# other domains (assume US?)
+# 
+-   node: .
+    locations: [dcache, cern-eos, echo.stfc.ac.uk, hep.manchester.ac.uk|hep.ph.ic.ac.uk|in2p3.fr|lancs.ac.uk|nikhef.nl|particle.cz|pp.rl.ac.uk|qmul.ac.uk, enstore, castor]
+    schemas: [root, https, gsiftp, srm]
+
+

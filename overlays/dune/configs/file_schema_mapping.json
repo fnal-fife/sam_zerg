@@ -1,0 +1,43 @@
+{
+ "parameters" : {
+   "bluearc" : "%{experiment}data|minerva_bluearc",
+   "dcache" : "fnal-dcache|dcache|enstore"
+ },
+
+ "schemas" : {
+   "gsiftp" : {
+     "%dcache" : [ "/pnfs/(.*)", "gsiftp://fndcadoor.fnal.gov:2811/pnfs/fnal.gov/usr/\\1/%filename" ],
+     "%bluearc" : "gsiftp://fg-bestman1.fnal.gov:2811%path/%filename",
+     "cern-eos" : "gsiftp://eospublicftp.cern.ch%path/%filename"
+   },
+   "xroot, root" : {
+     "%dcache" : [ "/pnfs/([^/]+/.*)", "%{schema}://fndcadoor.fnal.gov:1094/pnfs/fnal.gov/usr/\\1/%filename" ],
+     "cern-eos" : "root://eospublic.cern.ch/%path/%filename",
+     "castor"   : "root://castorpublic.cern.ch//castor/cern.ch%path/%filename",
+     "ph.liv.ac.uk" : "root://hepgrid11.ph.liv.ac.uk/%path/%filename",
+     "hep.manchester.ac.uk" : "root://bohr3226.tier2.hep.manchester.ac.uk/%path/%filename",
+     "gridpp.ecdf.ed.ac.uk" : "root://srm-rdf.gridpp.ecdf.ed.ac.uk:/%path/%filename",
+     "particle.cz" : "root://golias100.farm.particle.cz:/%path/%filename",
+     "echo.stfc.ac.uk" : "root://xrootd.echo.stfc.ac.uk/dune:%path/%filename"
+   },
+   "http, https" : {
+     "%dcache" : [ "/pnfs/(.*)", "https://fndcadoor.fnal.gov:2880/\\1/%filename" ],
+     "ph.liv.ac.uk" : "https://hepgrid11.ph.liv.ac.uk/dpm/ph.liv.ac.uk/home%path/%filename"
+   },
+   "srm" : {
+     "%dcache" : [ "/pnfs/(.*)", "srm://fndcadoor.fnal.gov:8443/srm/managerv2?SFN=/pnfs/fnal.gov/usr/\\1/%filename" ],
+     "%bluearc" : "srm://fg-bestman1.fnal.gov:10443/srm/v2/server?SFN=%{path}/%{filename}",
+     "ph.liv.ac.uk" : "srm://hepgrid11.ph.liv.ac.uk/dpm/ph.liv.ac.uk/home%path/%filename"
+   },
+   "dcap" : {
+     "%dcache" : [ "/pnfs/(.*)", "dcap://fndca1.fnal.gov:24125/pnfs/fnal.gov/usr/\\1/%filename" ]
+   },
+   "file" : {
+     "." : "file://%path/%filename"
+   },
+   "s3" : {
+     "s3" : "s3:/%{path}/%filename"
+   }
+ }
+}
+
