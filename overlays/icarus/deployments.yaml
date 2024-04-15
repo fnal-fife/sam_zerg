@@ -1,0 +1,241 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      serviceAccountName: useroot
+      volumes:
+      - name: server-hostcert
+        secret:
+          secretName: server-hostcert
+      - name: server-hostkey
+        secret:
+          secretName: server-hostkey
+      - name: nginx-config
+        secret:
+          secretName: nginx-config
+      - name: ca-volume
+        emptyDir: {}
+      initContainers:
+      - name: grid-certs
+        image: docker.io/bjwhitefnal/grid-security-files:32
+        command: ["/bin/bash", "-c", "chmod 755 /out/ && cp -rv --preserve=links /grid-certificates/* /out/"]
+        volumeMounts:
+        - name: ca-volume
+          mountPath: /out/
+      containers:
+      - name: nginx
+        image: imageregistry.fnal.gov/sam-zerg/sam-nginx-server:latest
+        ports:
+        - containerPort: 8443
+          name: https
+        - containerPort: 8480
+          name: http
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "100m"
+          limits:
+            memory: "1200Mi"
+            cpu: "1000m"
+        volumeMounts:
+        - name: server-hostcert
+          mountPath: /opt/sam/nginx/certs/server.crt
+          subPath: server.crt
+        - name: server-hostkey
+          mountPath: /opt/sam/nginx/certs/server.key
+          subPath: server.key
+        - name: ca-volume
+          mountPath: /etc/grid-security/certificates
+        - name: nginx-config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: samweb-server
+  labels:
+    app: samweb-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: samweb-server
+  template:
+    metadata:
+      labels:
+        app: samweb-server
+    spec:
+      serviceAccountName: useroot
+      volumes:
+      - name: samweb-server-config-template
+        secret:
+          secretName: samweb-server-config-template
+      - name: db-database
+        secret:
+          secretName: db-database
+      - name: db-hostname
+        secret:
+          secretName: db-hostname
+      - name: db-port
+        secret:
+          secretName: db-port
+      - name: db-pass
+        secret:
+          secretName: db-pass
+      containers:
+      - name: samweb-server
+        image: imageregistry.fnal.gov/sam-zerg/samweb-server:latest
+        ports:
+        - containerPort: 3000
+          name: uwsgi 
+        volumeMounts:
+        - name: samweb-server-config-template
+          mountPath: /opt/sam/samweb_server/samweb_server.conf.template
+          subPath: samweb_server.conf.template
+        env:
+        - name: EXPERIMENT
+          value: icarus
+        - name : STATION_CLIENT_URL
+          value: samicarus.fnal.gov
+        - name: DB_DATABASE
+          valueFrom:
+            secretKeyRef:
+              name: db-database
+              key: db-database
+        - name: DB_HOST
+          valueFrom:
+            secretKeyRef:
+              name: db-hostname
+              key: db-hostname
+        - name: DB_PORT
+          valueFrom:
+            secretKeyRef:
+              name: db-port
+              key: db-port
+        - name: DB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: db-pass
+              key: db-pass
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "100m"
+          limits:
+            memory: "2500Mi"
+            cpu: "2000m"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sam-station
+  labels:
+    app: sam-station
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sam-station
+  template:
+    metadata:
+      labels:
+        app: sam-station
+    spec:
+      serviceAccountName: useroot
+      volumes:
+      - name: server-hostcert
+        secret:
+          secretName: server-hostcert
+      - name: server-hostkey
+        secret:
+          secretName: server-hostkey
+      - name: station-config
+        secret:
+          secretName: station-config
+      - name: station-schema-map
+        secret:
+          secretName: station-schema-map
+      - name: station-location-map
+        secret:
+          secretName: station-location-map
+      containers:
+      - name: sam-station
+        image: imageregistry.fnal.gov/sam-zerg/sam-station:latest
+        ports:
+        - containerPort: 21000
+          name: uwsgi 
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "100m"
+          limits:
+            memory: "2500Mi"
+            cpu: "2000m"
+        volumeMounts:
+        - name: server-hostcert
+          mountPath: /opt/sam/sam_station/server.crt
+          subPath: server.crt
+        - name: server-hostkey
+          mountPath: /opt/sam/sam_station/server.key
+          subPath: server.key
+        - name: station-config
+          mountPath: /opt/sam/sam_station/sam_station_config.conf
+          subPath: station-config
+        - name: station-schema-map
+          mountPath: /opt/sam/sam_station/file_schema_mapping.json
+          subPath: station-schema-map
+        - name: station-location-map
+          mountPath: /opt/sam/sam_station/location_map.yaml
+          subPath: station-location-map
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sam-station-monitor
+  labels:
+    app: sam-station-monitor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sam-station-monitor
+  template:
+    metadata:
+      labels:
+        app: sam-station-monitor
+    spec:
+      serviceAccountName: useroot
+      volumes:
+      - name: station-monitor-db-config
+        secret:
+          secretName: station-monitor-db-config
+      containers:
+      - name: sam-station-monitor
+        image: imageregistry.fnal.gov/sam-zerg/sam-station-monitor:latest
+        ports:
+        - containerPort: 8081
+          name: uwsgi 
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "1000Mi"
+            cpu: "1000m"
+        volumeMounts:
+        - name: station-monitor-db-config
+          mountPath: /opt/sam/sam-station-monitor/default.cfg
+          subPath: station-monitor-db-config
