@@ -21,7 +21,7 @@ instance-designation = 'samweb_zerg_$EXPERIMENT'
 default_project_url = '/api/running/projects/'
 file_access_schema_map = './file_schema_mapping_example.json'
 admin_users = ['illingwo','swhite', 'bjwhite', 'dunepro', 'mengel']
-station_urls = { '$EXPERIMENT' : 'https://$STATION_CLIENT_URL:8483/sam/$EXPERIMENT/stations/$EXPERIMENT-okd01' }
+station_urls = { '$EXPERIMENT' : 'https://$STATION_CLIENT_URL:8483/sam/$EXPERIMENT/stations/$EXPERIMENT' }
 
 # allow WLCG tokens from these issuers
 token_audience = ['https://wlcg.cern.ch/jwt/v1/any', 'https://samweb.fnal.gov']
