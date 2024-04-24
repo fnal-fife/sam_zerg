@@ -25,6 +25,12 @@ spec:
       - name: nginx-config
         secret:
           secretName: nginx-config
+      - name: nginx-samweb-config
+        secret:
+          secretName: nginx-samweb-config
+      - name: samweb-pass
+        secret:
+          secretName: samweb-pass
       - name: ca-volume
         emptyDir: {}
       initContainers:
@@ -37,9 +43,17 @@ spec:
       containers:
       - name: nginx
         image: imageregistry.fnal.gov/sam-zerg/sam-nginx-server:latest
+        env:
+        - name: SAMWEB_PASS
+          valueFrom:
+            secretKeyRef:
+              name: samweb-pass
+              key: samweb-pass
         ports:
         - containerPort: 8443
           name: https
+        - containerPort: 8484
+          name: https-samweb
         - containerPort: 8480
           name: http
         resources:
@@ -61,6 +75,9 @@ spec:
         - name: nginx-config
           mountPath: /etc/nginx/nginx.conf
           subPath: nginx-config
+        - name: nginx-samweb-config
+          mountPath: /etc/nginx/templates/nginx-samweb.conf.template
+          subPath: nginx-samweb-config
 ---
 apiVersion: apps/v1
 kind: Deployment
