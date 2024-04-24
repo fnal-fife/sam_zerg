@@ -14,6 +14,9 @@ spec:
   - name: https
     port: 8483
     targetPort: 8483
+  - name: https-samweb
+    port: 8484
+    targetPort: 8484
   externalIPs: [ 131.225.218.190 ]
 ---
 apiVersion: v1
