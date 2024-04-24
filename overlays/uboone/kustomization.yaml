@@ -40,3 +40,9 @@ secretGenerator:
 - name: samweb-server-config-template
   files:
   - samweb_server.conf.template=configs/samweb_server.conf.template
+- name: samweb-pass
+  files:
+  - samweb-pass=secrets/samweb-pass
+- name: nginx-samweb-config
+  files:
+  - nginx-samweb-config=configs/nginx-samweb.conf.template
