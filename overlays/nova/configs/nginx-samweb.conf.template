@@ -1,0 +1,49 @@
+server {
+    listen       8484 ssl;
+
+    server_name  samnova.fnal.gov;
+    ssl_protocols TLSv1.2;
+
+    ssl_verify_client optional_no_ca;
+    ssl_certificate      /opt/sam/nginx/certs/server.crt;
+    ssl_certificate_key  /opt/sam/nginx/certs/server.key;
+
+    ssl_session_timeout  5m;
+
+    gzip  on;
+    gzip_types text/plain text/xml text/css text/javascript application/xml application/json application/javascript;
+    gzip_min_length 100;
+    gzip_proxied any;
+    gzip_vary on;
+
+    proxy_read_timeout 3600s;
+    # we want to enable persistent connections to remote http proxies
+    # so force 1.1 and remove any Connection: close header
+    proxy_http_version 1.1;
+    proxy_set_header Connection "";
+
+    if ($http_sam_trusted != "${SAMWEB_PASS}") {
+        return 403;
+    }
+
+    proxy_set_header X-Forwarded-Secure "ssl";
+    proxy_set_header X-Forwarded-Proto "https";
+    proxy_set_header X-FORWARDED-S-DN $http_x_forwarded_s_dn;
+    proxy_set_header X-FORWARDED-I-DN $http_x_forwarded_i_dn;
+
+    location /sam/ {
+        proxy_pass http://samweb-server:3000;
+    }
+
+    location /sam/nova/stations/nova/ {
+        proxy_pass http://sam-station:21000/;
+    }
+
+    location /station_monitor/ {
+        proxy_hide_header X-Forwarded-Secure;
+        proxy_hide_header X-FORWARDED-S-DN;
+        proxy_hide_header X-FORWARDED-I-DN;
+        proxy_set_header Access-Control-Allow-Origin "*";
+        proxy_pass http://sam-station-monitor:8081;
+    }
+}
