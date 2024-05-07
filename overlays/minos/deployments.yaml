@@ -126,7 +126,7 @@ spec:
         - name: EXPERIMENT
           value: minos
         - name : STATION_CLIENT_URL
-          value: samminos.fnal.gov
+          value: samweb.fnal.gov
         - name: DB_DATABASE
           valueFrom:
             secretKeyRef:
