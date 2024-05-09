@@ -126,7 +126,7 @@ spec:
         - name: EXPERIMENT
           value: mu2e
         - name : STATION_CLIENT_URL
-          value: sammu2e.fnal.gov
+          value: samweb.fnal.gov
         - name: DB_DATABASE
           valueFrom:
             secretKeyRef:
