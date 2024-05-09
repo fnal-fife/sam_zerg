@@ -41,4 +41,4 @@ user_dimension_query_limit = {'default' : 1, 'mu2epro' : 10}
 
 [graphite]
 
-server = 'lsdataitb.fnal.gov:2003'
+server = 'lsdata.fnal.gov:2003'

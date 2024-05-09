@@ -38,4 +38,4 @@ user_dimension_query_limit = {'default' : 1, 'illingwo' : 10, 'bjwhite' : 10}
 
 [graphite]
 
-server = 'lsdataitb.fnal.gov:2003'
+server = 'lsdata.fnal.gov:2003'

@@ -41,4 +41,4 @@ use_param_type_id_in_queries = True
 
 [graphite]
 
-server = 'lsdataitb.fnal.gov:2003'
+server = 'lsdata.fnal.gov:2003'
