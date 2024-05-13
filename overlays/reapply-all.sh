@@ -9,3 +9,6 @@ oc project samsbn; cd sbn/; make apply; cd ..;
 oc project samsbnd; cd sbnd/; make apply; cd ..;
 oc project samdune; cd dune/; make apply; cd ..;
 oc project samlariat; cd lariat/; make apply; cd ..;
+oc project samnova; cd nova/; make apply; cd ..;
+oc project samuboone; cd uboone/; make apply; cd ..;
+oc project samicarus; cd icarus/; make apply; cd ..;
