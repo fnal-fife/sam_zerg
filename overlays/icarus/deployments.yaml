@@ -220,6 +220,9 @@ spec:
         - name: station-location-map
           mountPath: /opt/sam/sam_station/location_map.yaml
           subPath: station-location-map
+        - name: station-schema-map
+          mountPath: /opt/sam/sam_station/file_schema_mapping.json
+          subPath: station-schema-map
 ---
 apiVersion: apps/v1
 kind: Deployment
