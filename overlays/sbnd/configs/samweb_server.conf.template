@@ -19,7 +19,7 @@ authorized_base_url = 'https://$STATION_CLIENT_URL:8483'
 instance-designation = 'samweb_zerg_$EXPERIMENT'
 
 default_project_url = '/api/running/projects/'
-file_access_schema_map = './file_schema_mapping_example.json'
+file_access_schema_map = '/opt/sam/samweb_server/file_schema_mapping.json'
 admin_users = ['illingwo','swhite', 'bjwhite', 'icaruspro', 'mengel', 'sbndpro']
 station_urls = { '$EXPERIMENT' : 'https://$STATION_CLIENT_URL:8483/sam/$EXPERIMENT/stations/$EXPERIMENT' }
 
