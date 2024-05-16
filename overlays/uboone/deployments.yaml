@@ -100,6 +100,9 @@ spec:
       - name: samweb-server-config-template
         secret:
           secretName: samweb-server-config-template
+      - name: station-schema-map
+        secret:
+          secretName: station-schema-map
       - name: db-database
         secret:
           secretName: db-database
@@ -122,6 +125,9 @@ spec:
         - name: samweb-server-config-template
           mountPath: /opt/sam/samweb_server/samweb_server.conf.template
           subPath: samweb_server.conf.template
+        - name: station-schema-map
+          mountPath: /opt/sam/samweb_server/file_schema_mapping.json
+          subPath: station-schema-map
         env:
         - name: EXPERIMENT
           value: uboone
@@ -182,9 +188,6 @@ spec:
       - name: station-config
         secret:
           secretName: station-config
-      - name: station-schema-map
-        secret:
-          secretName: station-schema-map
       - name: station-location-map
         secret:
           secretName: station-location-map
@@ -211,9 +214,6 @@ spec:
         - name: station-config
           mountPath: /opt/sam/sam_station/sam_station_config.conf
           subPath: station-config
-        - name: station-schema-map
-          mountPath: /opt/sam/sam_station/file_schema_mapping.json
-          subPath: station-schema-map
         - name: station-location-map
           mountPath: /opt/sam/sam_station/location_map.yaml
           subPath: station-location-map
