@@ -34,7 +34,7 @@ password = '$DB_PASS'
 
 session_params = { 'join_collapse_limit' : 20, 'from_collapse_limit' : 20, 'random_page_cost' : 8, 'statement_timeout' : '50min', 'lock_timeout' : '5s' }
 
-user_dimension_query_limit = {'default' : 1, 'illingwo' : 10, 'bjwhite' : 10}
+user_dimension_query_limit = {'default' : 5, 'illingwo' : 10, 'bjwhite' : 10}
 
 [graphite]
 
