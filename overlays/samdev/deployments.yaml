@@ -194,6 +194,9 @@ spec:
       - name: station-schema-map
         secret:
           secretName: station-schema-map
+      - name: station-localdb-pv
+        persistentVolumeClaim:
+          claimName: station-localdb-pvc
       containers:
       - name: sam-station
         image: imageregistry.fnal.gov/sam-zerg/sam-station:latest
@@ -223,6 +226,9 @@ spec:
         - name: station-schema-map
           mountPath: /opt/sam/sam_station/file_schema_mapping.json
           subPath: station-schema-map
+        - name: station-localdb-pv
+          mountPath: /var/tmp
+
 ---
 apiVersion: apps/v1
 kind: Deployment
