@@ -2,6 +2,7 @@
 resources:
 - deployments.yaml
 - services.yaml
+- station-pvc.yaml
 
 secretGenerator:
 - name: server-hostcert
