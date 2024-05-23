@@ -4,7 +4,7 @@ server.socket_host = '127.0.0.1'
 server.socket_port = 3000
 #log.screen = True
 
-plugindir = "test/plugins"
+plugindir = "/opt/sam/samweb_server/sam-web/plugins"
 samwebapi = "/sam/$EXPERIMENT"
 
 tools.proxy.on = True
