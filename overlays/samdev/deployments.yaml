@@ -158,7 +158,7 @@ spec:
             memory: "500Mi"
             cpu: "100m"
           limits:
-            memory: "2500Mi"
+            memory: "8000Mi"
             cpu: "2000m"
 ---
 apiVersion: apps/v1
@@ -208,7 +208,7 @@ spec:
             memory: "500Mi"
             cpu: "100m"
           limits:
-            memory: "2500Mi"
+            memory: "8000Mi"
             cpu: "2000m"
         volumeMounts:
         - name: server-hostcert
