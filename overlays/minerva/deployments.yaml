@@ -132,7 +132,7 @@ spec:
         - name: EXPERIMENT
           value: minerva
         - name : STATION_CLIENT_URL
-          value: samweb.fnal.gov
+          value: samminerva.fnal.gov
         - name: DB_DATABASE
           valueFrom:
             secretKeyRef:
