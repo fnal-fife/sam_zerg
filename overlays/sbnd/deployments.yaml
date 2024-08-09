@@ -132,7 +132,7 @@ spec:
         - name: EXPERIMENT
           value: sbnd
         - name : STATION_CLIENT_URL
-          value: samweb.fnal.gov
+          value: samsbnd.fnal.gov
         - name: DB_DATABASE
           valueFrom:
             secretKeyRef:
