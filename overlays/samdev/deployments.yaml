@@ -117,7 +117,7 @@ spec:
           secretName: db-pass
       containers:
       - name: samweb-server
-        image: imageregistry.fnal.gov/sam-zerg/samweb-server:latest
+        image: imageregistry.fnal.gov/sam-zerg/samweb-server:samdev
         ports:
         - containerPort: 3000
           name: uwsgi 
