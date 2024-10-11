@@ -41,7 +41,7 @@ host = '$DB_HOST'
 port = '$DB_PORT'
 password = '$DB_PASS'
 
-session_params = { 'join_collapse_limit' : 20, 'from_collapse_limit' : 20, 'random_page_cost' : 8, 'statement_timeout' : '50min', 'lock_timeout' : '5s' }
+session_params = { 'join_collapse_limit' : 11, 'from_collapse_limit' : 11, 'geqo_threshold': 12, 'geqo_effort' : 10, 'random_page_cost' : 4, 'statement_timeout' : '50min', 'lock_timeout' : '120s', 'jit': 1 }
 
 user_dimension_query_limit = {'default' : 5, 'illingwo' : 10, 'bjwhite' : 10, 'novapro': 10}
 
