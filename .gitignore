@@ -6,3 +6,5 @@ secrets
 sam_periodic/
 sam_httpd_server/cert
 sam_nginx_server/cert
+sam_cta_location_updater/samweb-client
+sam
