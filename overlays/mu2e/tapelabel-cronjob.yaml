@@ -18,7 +18,7 @@ spec:
             name: fetch-crl
             image: imageregistry.fnal.gov/sam-zerg/tapelabel-updater:latest
             imagePullPolicy: Always
-            command: ["python3", "update_sam_file_tape_status.py", "-e", "$(EXPERIMENT)", "--database", "postgresql://samdbs:$(DB_PASS)@$(DB_HOST):$(DB_PORT)/$(DB_DATABASE)"]
+            command: ["python3", "update_sam_file_tape_status.py", "-e", "$(EXPERIMENT)", "--hostname", "$(DB_HOST)", "--port", "$(DB_PORT)", "--database", "$(DB_DATABASE)", "--password", "$(DB_PASS)"]
             env:
             - name: EXPERIMENT
               value: mu2e
