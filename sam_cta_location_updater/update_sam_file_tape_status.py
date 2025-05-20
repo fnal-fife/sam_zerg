@@ -59,7 +59,11 @@ def main(hostname, port, database, password, experiment, days, dry_run=False):
             if dry_run:
                 print(f'Would update {params} for /files/name/{urllib.parse.quote(file_name)}/locations')
             else:
-                samweb.putURL(f'/files/name/{urllib.parse.quote(file_name)}/locations', params)
+                try:
+                    samweb.putURL(f'/files/name/{urllib.parse.quote(file_name)}/locations', params)
+                except samweb_client.exceptions.FileNotFound:
+                    print(f'File {file_name} is not declared to SAM. Skipping.')
+
         else:
             print(f"{file_name} is not on tape")
 
@@ -70,7 +74,13 @@ def check_dcache_on_tape(samweb, loc, fname, fsize, adler32):
     subpath = loc[14:]
     path = f'/pnfs/fnal.gov/usr/{subpath}/{fname}'
 
-    result = samweb.getURL(f'https://fndca.fnal.gov:3880/api/v1/namespace{path}?locality=true&checksum=true&optional=true').json()
+    try:
+        result = samweb.getURL(f'https://fndca.fnal.gov:3880/api/v1/namespace{path}?locality=true&checksum=true&optional=true').json()
+    except KeyError: 
+        # Use KeyError, since dCache doesn't return something the samweb client likes with for errmsg = err['message'] http_client_urllib.py line 296
+        # It's actually a 404, file not found.
+        print(f'File {fname} was not found at path {path} in dCache.')
+        return False
     locality = result['fileLocality']
 
     dcache_size = result['size']
