@@ -21,6 +21,7 @@ spec:
   # externalIPs: [ 131.225.218.190 ]
   # okdprod2
   externalIPs: [ 131.225.218.230 ]
+---
 apiVersion: v1
 kind: Service
 metadata:

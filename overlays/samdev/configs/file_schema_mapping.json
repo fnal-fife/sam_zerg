@@ -6,17 +6,17 @@
 
  "schemas" : {
    "http, https" : {
-     "%dcache" : [ "/pnfs/(.*)", "https://fndca4a.fnal.gov:2880/\\1/%filename" ]
+     "%dcache" : [ "/pnfs/(.*)", "https://fndcadoor.fnal.gov:2880/\\1/%filename" ]
    },
    "xroot, root" : {
-     "%dcache" : [ "/pnfs/([^/]+/.*)", "%{schema}://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/\\1/%filename" ]
+     "%dcache" : [ "/pnfs/([^/]+/.*)", "%{schema}://fndcadoor.fnal.gov:1094/pnfs/fnal.gov/usr/\\1/%filename" ]
    },
    "srm" : {
-     "%dcache" : [ "/pnfs/(.*)", "srm://fndca1.fnal.gov:8443/srm/managerv2?SFN=/pnfs/fnal.gov/usr/\\1/%filename" ],
+     "%dcache" : [ "/pnfs/(.*)", "srm://fndcdoor.fnal.gov:8443/srm/managerv2?SFN=/pnfs/fnal.gov/usr/\\1/%filename" ],
      "%bluearc" : "srm://fg-bestman1.fnal.gov:10443/srm/v2/server?SFN=%{path}/%{filename}"
    },
    "dcap" : {
-     "%dcache" : [ "/pnfs/(.*)", "dcap://fndca1.fnal.gov:24125/pnfs/fnal.gov/usr/\\1/%filename" ]
+     "%dcache" : [ "/pnfs/(.*)", "dcap://fndcadoor.fnal.gov:24125/pnfs/fnal.gov/usr/\\1/%filename" ]
    },
    "file" : {
      "." : "file://%path/%filename"
