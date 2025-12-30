@@ -3,6 +3,7 @@ resources:
 - deployments.yaml
 - services.yaml
 - station-pvc.yaml
+- tapelabel-cronjob.yaml
 
 secretGenerator:
 - name: server-hostcert

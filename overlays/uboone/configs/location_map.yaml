@@ -1,4 +1,4 @@
 -   node: .
     locations: [ dcache, enstore ]
-    schemas: [ gsiftp, root, https, srm ]
+    schemas: [ https, root, gsiftp, srm ]
 

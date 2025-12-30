@@ -35,7 +35,7 @@ spec:
         emptyDir: {}
       initContainers:
       - name: grid-certs
-        image: docker.io/bjwhitefnal/grid-security-files:32
+        image: imageregistry.fnal.gov/docker.io/bjwhitefnal/grid-security-files:32
         command: ["/bin/bash", "-c", "chmod 755 /out/ && cp -rv --preserve=links /grid-certificates/* /out/"]
         volumeMounts:
         - name: ca-volume
@@ -132,7 +132,7 @@ spec:
         - name: EXPERIMENT
           value: minerva
         - name : STATION_CLIENT_URL
-          value: samweb.fnal.gov
+          value: samminerva.fnal.gov
         - name: DB_DATABASE
           valueFrom:
             secretKeyRef:

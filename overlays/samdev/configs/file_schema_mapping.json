@@ -5,15 +5,11 @@
  },
 
  "schemas" : {
-   "gsiftp" : {
-     "%dcache" : [ "/pnfs/(.*)", "gsiftp://fndca1.fnal.gov:2811/pnfs/fnal.gov/usr/\\1/%filename" ],
-     "%bluearc" : "gsiftp://fg-bestman1.fnal.gov:2811%path/%filename"
+   "http, https" : {
+     "%dcache" : [ "/pnfs/(.*)", "https://fndca4a.fnal.gov:2880/\\1/%filename" ]
    },
    "xroot, root" : {
      "%dcache" : [ "/pnfs/([^/]+/.*)", "%{schema}://fndca1.fnal.gov:1094/pnfs/fnal.gov/usr/\\1/%filename" ]
-   },
-   "http, https" : {
-     "%dcache" : [ "/pnfs/(.*)", "https://fndca4a.fnal.gov:2880/\\1/%filename" ]
    },
    "srm" : {
      "%dcache" : [ "/pnfs/(.*)", "srm://fndca1.fnal.gov:8443/srm/managerv2?SFN=/pnfs/fnal.gov/usr/\\1/%filename" ],

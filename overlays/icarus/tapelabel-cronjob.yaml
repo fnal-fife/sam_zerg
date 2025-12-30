@@ -1,0 +1,73 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: tapelabel-updater
+spec:
+  concurrencyPolicy: Replace
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          serviceAccountName: useroot
+          containers:
+          - args:
+            name: fetch-crl
+            image: imageregistry.fnal.gov/sam-zerg/tapelabel-updater:latest
+            imagePullPolicy: Always
+            command: ["python3", "update_sam_file_tape_status.py", "-e", "$(EXPERIMENT)", "--hostname", "$(DB_HOST)", "--port", "$(DB_PORT)", "--database", "$(DB_DATABASE)", "--password", "$(DB_PASS)"]
+            env:
+            - name: EXPERIMENT
+              value: icarus
+            - name: X509_USER_CERT
+              value: /opt/sam/server.crt
+            - name: X509_USER_KEY
+              value: /opt/sam/server.key
+            - name: DB_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: db-database
+                  key: db-database
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: db-hostname
+                  key: db-hostname
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: db-port
+                  key: db-port
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: db-pass
+                  key: db-pass
+            resources:
+              requests:
+                memory: "500Mi"
+                cpu: "100m"
+              limits:
+                memory: "1500Mi"
+                cpu: "2000m"
+            volumeMounts:
+            - name: server-hostcert
+              mountPath: /opt/sam/server.crt
+              subPath: server.crt
+            - name: server-hostkey
+              mountPath: /opt/sam/server.key
+              subPath: server.key
+          restartPolicy: OnFailure
+          terminationGracePeriodSeconds: 30
+          volumes:
+          - name: server-hostcert
+            secret:
+              secretName: server-hostcert
+          - name: server-hostkey
+            secret:
+              secretName: server-hostkey
+  schedule: 0 */3 * * *
+  suspend: false
