@@ -236,6 +236,8 @@ metadata:
   labels:
     app: sam-station-monitor
 spec:
+  strategy:
+    type: Recreate
   replicas: 1
   selector:
     matchLabels:
