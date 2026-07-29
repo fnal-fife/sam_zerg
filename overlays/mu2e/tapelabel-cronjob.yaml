@@ -69,5 +69,5 @@ spec:
           - name: server-hostkey
             secret:
               secretName: server-hostkey
-  schedule: 0 */3 * * *
+  schedule: 35 */3 * * *
   suspend: false

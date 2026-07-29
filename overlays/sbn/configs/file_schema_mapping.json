@@ -22,6 +22,7 @@
      "particle.cz" : "root://golias100.farm.particle.cz:/%path/%filename",
      "echo.stfc.ac.uk" : "root://xrootd.echo.stfc.ac.uk/dune:%path/%filename",
      "cnaf" : "https://xfer-archive.cr.cnaf.infn.it:8443/%path/%filename",
+     "imperial" : "root://gfe02.grid.hep.ph.ic.ac.uk:1094/pnfs/hep.ph.ic.ac.uk/%path/%filename",
      "slac" : "root://sdfdtn005.slac.stanford.edu:1100/%path/%filename"
    },
    "http, https" : {
@@ -29,6 +30,7 @@
      "ph.liv.ac.uk" : "https://hepgrid11.ph.liv.ac.uk/dpm/ph.liv.ac.uk/home%path/%filename",
      "dbdata0vm.fnal.gov" : "https://dbdata0vm.fnal.gov:8444%path/%filename",
      "cnaf" : "https://xfer-archive.cr.cnaf.infn.it:8443%path/%filename",
+     "imperial": "https://gfe02.grid.hep.ph.ic.ac.uk:2880/pnfs/hep.ph.ic.ac.uk%path/%filename", 
      "slac" : "https://sdfdtn005.slac.stanford.edu:1100%path/%filename"
    },
    "srm" : {

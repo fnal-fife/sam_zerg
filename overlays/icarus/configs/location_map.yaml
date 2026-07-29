@@ -1,6 +1,6 @@
 -   node: nid[0-9].*
-    locations: [ nersc ]
-    schemas: [ file ]
+    locations: [ nersc, fnal-dcache, dcache, enstore, cnafdisk, cnaftape, slacdisk ]
+    schemas: [ root, https, file, gsiftp, srm ]
 
 -   node: .
     locations: [ fnal-dcache, dcache, enstore, cnafdisk, cnaftape, slacdisk ]
