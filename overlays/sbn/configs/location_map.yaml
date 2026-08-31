@@ -3,5 +3,5 @@
     schemas: [ file ]
 
 -   node: .
-    locations: [ fnal-dcache, dcache, enstore, cnafdisk, cnaftape, slacdisk ]
+    locations: [ fnal-dcache, dcache, enstore, cnafdisk, cnaftape, slacdisk, imperial ]
     schemas: [ root, https, gsiftp, srm, file ]

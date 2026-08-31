@@ -35,7 +35,7 @@ host = '$DB_HOST'
 port = '$DB_PORT'
 password = '$DB_PASS'
 
-session_params = { 'join_collapse_limit' : 20, 'from_collapse_limit' : 20, 'random_page_cost' : 8, 'statement_timeout' : '50min', 'lock_timeout' : '5s' }
+session_params = { 'join_collapse_limit' : 20, 'from_collapse_limit' : 20, 'random_page_cost' : 8, 'statement_timeout' : '110min', 'lock_timeout' : '5s' }
 
 user_dimension_query_limit = {'default' : 5, 'dunepro' : 10}
 
